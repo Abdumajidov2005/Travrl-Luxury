@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="uz" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Golden Moon Travel — Oltin Oy Ostida Yangi Ufqlar Sari</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            obsidian: '#050811',
+            abyss: '#091020',
+            gold: {
+              light: '#FFF1C1',
+              DEFAULT: '#E5A93C',
+              bright: '#F6C86E',
+              deep: '#B8731E'
+            }
+          },
+          fontFamily: {
+            serif: ['Cinzel', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #050811;
+      color: #F8E7C1;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Fullscreen Motion Graphics Canvas */
+    #oceanSceneCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Atmospheric vignette overlay so UI text stays effortlessly legible */
+    .scene-vignette {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 58% 42%, rgba(5, 8, 17, 0.04) 0%, rgba(5, 8, 17, 0.45) 55%, rgba(4, 6, 13, 0.88) 100%),
+        linear-gradient(180deg, rgba(5, 8, 17, 0.65) 0%, rgba(5, 8, 17, 0.1) 25%, rgba(5, 8, 17, 0.25) 72%, rgba(5, 8, 17, 0.96) 100%);
+    }
+
+    /* Glassmorphism panels */
+    .glass-panel {
+      background: rgba(9, 15, 29, 0.62);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(229, 169, 60, 0.24);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 241, 193, 0.12);
+    }
+
+    .glass-card {
+      background: linear-gradient(165deg, rgba(13, 21, 39, 0.78) 0%, rgba(6, 10, 20, 0.88) 100%);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(229, 169, 60, 0.18);
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s ease, box-shadow 0.45s ease;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(246, 200, 110, 0.6);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(229, 169, 60, 0.18);
+    }
+
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #FFF3CC 0%, #F6C86E 45%, #D4882A 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #F6C86E 0%, #D98A2B 100%);
+      color: #070B14;
+      font-weight: 700;
+      box-shadow: 0 8px 25px rgba(217, 138, 43, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+      transition: all 0.3s ease;
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(246, 200, 110, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+      filter: brightness(1.06);
+    }
+
+    /* Custom select & date inputs */
+    select, input[type="date"], input[type="text"], input[type="tel"] {
+      color-scheme: dark;
+    }
+
+    /* Subtle floating badge animation */
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 15px rgba(229, 169, 60, 0.25); }
+      50% { box-shadow: 0 0 28px rgba(246, 200, 110, 0.5); }
+    }
+
+    .glow-badge {
+      animation: pulseGlow 4s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-gold selection:text-obsidian">
+
+  <!-- LIVE MOTION GRAPHICS BACKGROUND CANVAS (Moon, Clouds, Sailing Galleon & Shimmering Ocean) -->
+  <canvas id="oceanSceneCanvas"></canvas>
+  <div class="scene-vignette"></div>
+
+  <!-- MAIN CONTENT WRAPPER -->
+  <div class="relative z-10 flex flex-col min-h-screen">
+
+    <!-- NAVBAR -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-40 transition-all duration-300 px-4 sm:px-8 py-4">
+      <div class="max-w-7xl mx-auto glass-panel rounded-2xl px-5 sm:px-7 py-3.5 flex items-center justify-between">
+        <!-- Brand Logo -->
+        <a href="#" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-gold-bright/20 to-gold-deep/20 border border-gold/40 flex items-center justify-center relative overflow-hidden">
+            <svg class="w-6 h-6 text-gold-bright transition-transform duration-700 group-hover:rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+              <circle cx="12" cy="12" r="9" stroke-opacity="0.6"/>
+              <polygon points="12 5 14.5 11.5 12 19 9.5 11.5 12 5" fill="currentColor" fill-opacity="0.25"/>
+              <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+            </svg>
+          </div>
+          <div>
+            <span class="font-serif text-base sm:text-lg font-bold tracking-wider text-gold-light block leading-none">GOLDEN MOON</span>
+            <span class="text-[10px] tracking-[0.28em] text-gold/80 uppercase font-medium">Oltin Oy Sayohatlari</span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-amber-100/85">
+          <a href="#yonalishlar" class="hover:text-gold-bright transition-colors">Yo‘nalishlar</a>
+          <a href="#kruizlar" class="hover:text-gold-bright transition-colors">Kruizlar</a>
+          <a href="#afzalliklar" class="hover:text-gold-bright transition-colors">Nega aynan biz?</a>
+          <a href="#aloqa" class="hover:text-gold-bright transition-colors">Biz haqimizda</a>
+        </nav>
+
+        <!-- Actions -->
+        <div class="flex items-center gap-3">
+          <button id="toggleCameraBtn" title="Kema ko'rinishini yaqinlashtirish" class="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-xl border border-gold/25 bg-obsidian/50 hover:border-gold/60 text-xs text-gold-light/90 transition">
+            <svg class="w-4 h-4 text-gold-bright" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+            </svg>
+            <span id="cinemaModeLabel">Sahna rejimi</span>
+          </button>
+          <button onclick="openBookingModal()" class="btn-gold px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm tracking-wide cursor-pointer">
+            Sayohatni band qilish
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- HERO SECTION (Positioned carefully so the central Golden Moon & Sailing Galleon remain majestically visible) -->
+    <section id="heroSection" class="relative min-h-screen flex flex-col justify-between pt-28 pb-10 px-4 sm:px-8 max-w-7xl mx-auto w-full transition-opacity duration-500">
+      
+      <!-- Left-aligned Editorial Copy leaving right/center canvas open for the Ship & Moon -->
+      <div class="my-auto max-w-xl lg:max-w-2xl pt-4 sm:pt-8">
+        <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full glass-panel glow-badge mb-6">
+          <span class="w-2 h-2 rounded-full bg-gold-bright animate-ping"></span>
+          <span class="text-[11px] sm:text-xs font-semibold tracking-[0.2em] text-gold-bright uppercase">
+            Eksklyuziv Dengiz va Dunyo Sayohatlari
+          </span>
+        </div>
+
+        <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.12] tracking-tight text-white drop-shadow-[0_6px_24px_rgba(0,0,0,0.85)]">
+          Oltin Oy Ostida <br/>
+          <span class="gold-gradient-text">Yangi Ufqlar Sari</span>
+        </h1>
+
+        <p class="mt-5 text-base sm:text-lg text-amber-100/85 leading-relaxed max-w-lg drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]">
+          Afsonaviy dengiz yo‘llari, sirli orollar va oy nuri ostidagi unutilmas tungi kruizlar — sizning orzuingizdagi sarguzasht shu yerdan boshlanadi.
+        </p>
+
+        <div class="mt-7 flex flex-wrap items-center gap-4">
+          <a href="#yonalishlar" class="btn-gold px-7 py-3.5 rounded-xl text-sm sm:text-base inline-flex items-center gap-2">
+            <span>Yo‘nalishlarni ko‘rish</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+          </a>
+          <button onclick="openBookingModal('Oltin Oy Tungi Kruizi')" class="px-6 py-3.5 rounded-xl glass-panel hover:border-gold/60 text-gold-light text-sm sm:text-base font-medium transition cursor-pointer">
+            VIP Maslahat olish
+          </button>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE GLASSMORPHIC SEARCH / BOOKING BAR -->
+      <div class="mt-10 w-full">
+        <form id="heroSearchForm" class="glass-panel rounded-2xl p-4 sm:p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+          <!-- Destination -->
+          <div class="flex flex-col gap-1.5">
+            <label for="searchDestination" class="text-xs font-semibold uppercase tracking-wider text-gold-bright/90 flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              Yo‘nalishni tanlang
+            </label>
+            <select id="searchDestination" class="w-full rounded-xl bg-obsidian/80 border border-gold/25 focus:border-gold-bright px-3.5 py-3 text-sm text-amber-50 outline-none transition">
+              <option value="all">Barcha dengiz yo‘nalishlari</option>
+              <option value="O'rta Yer dengizi">O‘rta Yer dengizi (Italiya & Gretsiya)</option>
+              <option value="Karib orollari">Karib orollari — Sirli ko‘rfazlar</option>
+              <option value="Norvegiya fyordlari">Norvegiya fyordlari va Shimol yog‘dusi</option>
+              <option value="Maldiv orollari">Maldiv orollari — Oltin laguna</option>
+            </select>
+          </div>
+
+          <!-- Date -->
+          <div class="flex flex-col gap-1.5">
+            <label for="searchDate" class="text-xs font-semibold uppercase tracking-wider text-gold-bright/90 flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              Jo‘nab ketish sanasi
+            </label>
+            <input type="date" id="searchDate" class="w-full rounded-xl bg-obsidian/80 border border-gold/25 focus:border-gold-bright px-3.5 py-2.5 text-sm text-amber-50 outline-none transition" />
+          </div>
+
+          <!-- Guests -->
+          <div class="flex flex-col gap-1.5">
+            <label for="searchGuests" class="text-xs font-semibold uppercase tracking-wider text-gold-bright/90 flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              Sayohatchilar soni
+            </label>
+            <select id="searchGuests" class="w-full rounded-xl bg-obsidian/80 border border-gold/25 focus:border-gold-bright px-3.5 py-3 text-sm text-amber-50 outline-none transition">
+              <option value="2 kishi (Juftlik)">2 kishi (Romantik kayuta)</option>
+              <option value="1 kishi">1 kishi (Shaxsiy lyuks)</option>
+              <option value="4 kishi (Oila)">4 kishi (Oilaviy paluba)</option>
+              <option value="6+ kishi (VIP guruh)">6+ kishi (Xususiy yaxta)</option>
+            </select>
+          </div>
+
+          <!-- Submit Button -->
+          <div>
+            <button type="submit" class="w-full btn-gold py-3 px-5 rounded-xl text-sm font-bold flex items-center justify-center gap-2 cursor-pointer">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              <span>Tur qidirish</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- FEATURED TOURS SECTION -->
+    <section id="yonalishlar" class="relative py-20 px-4 sm:px-8 max-w-7xl mx-auto w-full">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+        <div>
+          <span class="text-xs font-semibold tracking-[0.25em] text-gold-bright uppercase block mb-2">Tanlangan Ekspeditsiyalar</span>
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white">Mashhur Sayohat Yo‘nalishlari</h2>
+        </div>
+        <div class="flex flex-wrap gap-2" id="filterPills">
+          <button data-filter="all" class="filter-btn active px-4 py-2 rounded-xl text-xs font-semibold bg-gold text-obsidian transition cursor-pointer">Barchasi</button>
+          <button data-filter="O'rta Yer dengizi" class="filter-btn px-4 py-2 rounded-xl text-xs font-semibold glass-panel text-amber-100 hover:border-gold/60 transition cursor-pointer">O‘rta Yer dengizi</button>
+          <button data-filter="Karib orollari" class="filter-btn px-4 py-2 rounded-xl text-xs font-semibold glass-panel text-amber-100 hover:border-gold/60 transition cursor-pointer">Karib orollari</button>
+          <button data-filter="Norvegiya fyordlari" class="filter-btn px-4 py-2 rounded-xl text-xs font-semibold glass-panel text-amber-100 hover:border-gold/60 transition cursor-pointer">Norvegiya</button>
+          <button data-filter="Maldiv orollari" class="filter-btn px-4 py-2 rounded-xl text-xs font-semibold glass-panel text-amber-100 hover:border-gold/60 transition cursor-pointer">Maldiv</button>
+        </div>
+      </div>
+
+      <!-- Tour Cards Grid -->
+      <div id="toursGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+        <!-- Populated dynamically via JS for instant filtering & booking sync -->
+      </div>
+    </section>
+
+    <!-- SIGNATURE NIGHT VOYAGE BANNER -->
+    <section id="kruizlar" class="relative py-14 px-4 sm:px-8 max-w-7xl mx-auto w-full">
+      <div class="glass-panel rounded-3xl p-8 sm:p-12 relative overflow-hidden">
+        <div class="absolute -right-20 -top-20 w-80 h-80 rounded-full bg-gold/10 blur-3xl pointer-events-none"></div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-8">
+            <span class="inline-block px-3.5 py-1 rounded-full bg-gold/15 border border-gold/30 text-gold-bright text-xs font-semibold tracking-widest uppercase mb-4">
+              Maxsus Tungi Ekspeditsiya
+            </span>
+            <h3 class="font-serif text-2xl sm:text-4xl font-bold text-white leading-snug">
+              “Oltin Oy” Yelkanli Fregatida 7 Kunlik Afsonaviy Kruiz
+            </h3>
+            <p class="mt-4 text-amber-100/80 text-sm sm:text-base leading-relaxed">
+              Klassik yog‘och paluba, oltin naqshli kayutalar, yulduzli osmon ostidagi kechki ziyofatlar va eng go‘zal maxfiy orollarga to‘xtashlar. Joylar soni har bir reysda atigi 24 kishi bilan cheklangan.
+            </p>
+            <div class="mt-6 flex flex-wrap gap-6 text-sm text-gold-light">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-gold-bright"></span>
+                <span>Barcha taomlar va ichimliklar (All-Inclusive)</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-gold-bright"></span>
+                <span>Shaxsiy kapitan ekskursiyasi</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-gold-bright"></span>
+                <span>Toshkentdan to‘g‘ridan-to‘g‘ri transfer</span>
+              </div>
+            </div>
+          </div>
+          <div class="lg:col-span-4 flex flex-col items-start lg:items-end justify-center border-t lg:border-t-0 lg:border-l border-gold/20 pt-6 lg:pt-0 lg:pl-8">
+            <span class="text-xs uppercase tracking-widest text-amber-200/70">Boshlang‘ich narx</span>
+            <div class="font-serif text-4xl font-bold gold-gradient-text mt-1">$1,890</div>
+            <span class="text-xs text-amber-200/60 mt-1">1 kishi uchun / 7 kecha</span>
+            <button onclick="openBookingModal('“Oltin Oy” Yelkanli Fregatida 7 Kunlik Kruiz')" class="mt-6 w-full sm:w-auto btn-gold px-7 py-3.5 rounded-xl text-sm font-bold cursor-pointer">
+              Kayutani band qilish
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY TRAVEL WITH US -->
+    <section id="afzalliklar" class="relative py-20 px-4 sm:px-8 max-w-7xl mx-auto w-full">
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <span class="text-xs font-semibold tracking-[0.25em] text-gold-bright uppercase block mb-2">Mukammal Xizmat</span>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white">Nega Aynan Bizni Tanlashadi?</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-7">
+        <!-- Feature 1 -->
+        <div class="glass-card rounded-2xl p-7">
+          <div class="w-12 h-12 rounded-xl bg-gold/15 border border-gold/35 flex items-center justify-center text-gold-bright mb-5">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
+            </svg>
+          </div>
+          <h3 class="font-serif text-xl font-bold text-gold-light mb-2.5">Shaxsiy Marshrutlar</h3>
+          <p class="text-sm text-amber-100/75 leading-relaxed">
+            Har bir sayohatchining istagiga moslashtirilgan individual dengiz va quruqlik yo‘nalishlari, maxfiy ko‘rfazlar va eksklyuziv manzillar.
+          </p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="glass-card rounded-2xl p-7">
+          <div class="w-12 h-12 rounded-xl bg-gold/15 border border-gold/35 flex items-center justify-center text-gold-bright mb-5">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <h3 class="font-serif text-xl font-bold text-gold-light mb-2.5">24/7 VIP Hamrohlik</h3>
+          <p class="text-sm text-amber-100/75 leading-relaxed">
+            Viza rasmiylashtirishdan tortib, shaxsiy gidlar va xususiy transferlargacha — sayohatingizning har bir daqiqasida biz yoningizdamiz.
+          </p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="glass-card rounded-2xl p-7">
+          <div class="w-12 h-12 rounded-xl bg-gold/15 border border-gold/35 flex items-center justify-center text-gold-bright mb-5">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+            </svg>
+          </div>
+          <h3 class="font-serif text-xl font-bold text-gold-light mb-2.5">Eksklyuziv Kruizlar</h3>
+          <p class="text-sm text-amber-100/75 leading-relaxed">
+            Zamonaviy qulaylik va klassik dengiz romantikasini o‘zida mujassam etgan hashamatli kemalarda unutilmas tungi sayohatlar.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="aloqa" class="relative mt-auto border-t border-gold/20 bg-obsidian/90 backdrop-blur-md pt-14 pb-8 px-4 sm:px-8">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 pb-10 border-b border-gold/15">
+        <div class="md:col-span-2">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="font-serif text-xl font-bold tracking-wider gold-gradient-text">GOLDEN MOON TRAVEL</span>
+          </div>
+          <p class="text-sm text-amber-100/70 max-w-md leading-relaxed">
+            Oltin Oy Sayohatlari — dunyo okeanlari va eng go‘zal sohillar bo‘ylab premium darajadagi kruiz va ekspeditsiyalarni tashkil etuvchi ishonchli hamrohingiz.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-serif text-sm font-bold uppercase tracking-wider text-gold-bright mb-4">Tezkor Havolalar</h4>
+          <ul class="space-y-2.5 text-sm text-amber-100/75">
+            <li><a href="#yonalishlar" class="hover:text-gold-bright transition">Mashhur Yo‘nalishlar</a></li>
+            <li><a href="#kruizlar" class="hover:text-gold-bright transition">Tungi Fregat Kruizi</a></li>
+            <li><a href="#afzalliklar" class="hover:text-gold-bright transition">Xizmatlarimiz</a></li>
+            <li><button onclick="openBookingModal()" class="hover:text-gold-bright transition cursor-pointer">Onlayn Band Qilish</button></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-serif text-sm font-bold uppercase tracking-wider text-gold-bright mb-4">Aloqa Markazi</h4>
+          <ul class="space-y-2.5 text-sm text-amber-100/75">
+            <li>Toshkent sh., Amir Temur shoh ko‘chasi, 108</li>
+            <li class="text-gold-light font-semibold">+998 (71) 200-88-99</li>
+            <li>info@goldenmoontravel.uz</li>
+            <li class="text-xs text-amber-200/50 pt-1">Har kuni: 09:00 — 22:00</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="max-w-7xl mx-auto pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-amber-200/50 gap-3">
+        <p>© 2026 Golden Moon Travel (Oltin Oy Sayohatlari). Barcha huquqlar himoyalangan.</p>
+        <p>Kursor harakati orqali dengiz va oy manzarasini boshqaring</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- FLOATING EXIT CINEMA MODE BUTTON (Visible when UI is hidden to admire the ship & moon) -->
+  <button id="exitCinemaBtn" class="hidden fixed bottom-6 right-6 z-50 glass-panel px-5 py-3 rounded-full text-xs font-semibold text-gold-bright border border-gold/50 shadow-2xl hover:scale-105 transition cursor-pointer">
+    ← Saytga qaytish
+  </button>
+
+  <!-- INTERACTIVE BOOKING MODAL -->
+  <div id="bookingModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+    <div class="glass-panel rounded-3xl max-w-lg w-full p-6 sm:p-8 relative border border-gold/40 shadow-2xl transform transition-all">
+      <button onclick="closeBookingModal()" aria-label="Yopish" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-obsidian/80 border border-gold/25 flex items-center justify-center text-amber-100 hover:text-gold-bright hover:border-gold transition cursor-pointer">
+        ✕
+      </button>
+
+      <div id="bookingFormContainer">
+        <span class="text-xs font-semibold tracking-[0.22em] text-gold-bright uppercase">Onlayn Bron Qilish</span>
+        <h3 class="font-serif text-2xl sm:text-3xl font-bold text-white mt-1">Sayohatingizni Band Qiling</h3>
+        <p class="text-xs sm:text-sm text-amber-100/75 mt-2">
+          Ma’lumotlaringizni qoldiring — shaxsiy menejerimiz 15 daqiqa ichida siz bilan bog‘lanadi.
+        </p>
+
+        <form id="modalBookingForm" class="mt-6 space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-gold-light mb-1.5">Tanlangan yo‘nalish</label>
+            <input type="text" id="modalTourInput" required class="w-full rounded-xl bg-obsidian/90 border border-gold/30 focus:border-gold-bright px-4 py-3 text-sm text-white outline-none" value="Oltin Oy Ostida Tungi Kruiz" />
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-gold-light mb-1.5">Ism va familiyangiz</label>
+              <input type="text" id="modalNameInput" required placeholder="Masalan: Sardor Karimov" class="w-full rounded-xl bg-obsidian/90 border border-gold/30 focus:border-gold-bright px-4 py-3 text-sm text-white outline-none" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gold-light mb-1.5">Telefon raqamingiz</label>
+              <input type="tel" id="modalPhoneInput" required placeholder="+998 90 123 45 67" class="w-full rounded-xl bg-obsidian/90 border border-gold/30 focus:border-gold-bright px-4 py-3 text-sm text-white outline-none" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-gold-light mb-1.5">Sana</label>
+              <input type="date" id="modalDateInput" class="w-full rounded-xl bg-obsidian/90 border border-gold/30 focus:border-gold-bright px-4 py-2.5 text-sm text-white outline-none" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gold-light mb-1.5">Mehmonlar</label>
+              <input type="text" id="modalGuestsInput" value="2 kishi" class="w-full rounded-xl bg-obsidian/90 border border-gold/30 focus:border-gold-bright px-4 py-2.5 text-sm text-white outline-none" />
+            </div>
+          </div>
+
+          <button type="submit" class="w-full btn-gold py-3.5 rounded-xl text-sm font-bold mt-2 cursor-pointer">
+            Arizani tasdiqlash
+          </button>
+        </form>
+      </div>
+
+      <!-- Confirmation State -->
+      <div id="bookingSuccessState" class="hidden text-center py-6">
+        <div class="w-16 h-16 rounded-full bg-gold/20 border border-gold-bright flex items-center justify-center mx-auto mb-4 text-gold-bright text-2xl">
+          ✓
+        </div>
+        <h4 class="font-serif text-2xl font-bold text-white">Arizangiz Qabul Qilindi!</h4>
+        <p id="bookingSuccessText" class="text-sm text-amber-100/80 mt-3 leading-relaxed"></p>
+        <button onclick="closeBookingModal()" class="mt-6 btn-gold px-8 py-3 rounded-xl text-sm font-bold cursor-pointer">
+          Yopish
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- JAVASCRIPT: CINEMATIC MOTION GRAPHICS CANVAS + TRAVEL APP INTERACTION -->
+  <!-- ===================================================================== -->
+  <script>
+    /**
+     * 1. HIGH-CRAFT MOTION GRAPHICS ENGINE (Canvas 2D)
+     * Recreates the exact dramatic atmosphere of the reference artwork:
+     * - Deep midnight obsidian sky with twinkling stars
+     * - Massive glowing golden full moon with procedural lunar craters & atmospheric halo
+     * - Layered volumetric backlit storm/cumulus clouds with golden rim-lighting
+     * - Intricate dark-wood & gold-filigree 3-masted tall sailing ship (Galleon/Frigate)
+     *   silhouetted against the golden moon, gently pitching, rolling, billowing sails,
+     *   and glowing warm deck lanterns
+     * - Dark reflective ocean with shimmering golden moonlight path, rolling waves & hull foam
+     */
+    (function initOceanMotionGraphics() {
+      const canvas = document.getElementById('oceanSceneCanvas');
+      const ctx = canvas.getContext('2d');
+
+      let width = 0;
+      let height = 0;
+      let dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+      // Mouse parallax smoothing
+      const pointer = { x: 0, y: 0, targetX: 0, targetY: 0 };
+
+      window.addEventListener('mousemove', (e) => {
+        pointer.targetX = (e.clientX / window.innerWidth - 0.5) * 2;
+        pointer.targetY = (e.clientY / window.innerHeight - 0.5) * 2;
+      });
+
+      window.addEventListener('touchmove', (e) => {
+        if (e.touches && e.touches.length > 0) {
+          pointer.targetX = (e.touches[0].clientX / window.innerWidth - 0.5) * 2;
+          pointer.targetY = (e.touches[0].clientY / window.innerHeight - 0.5) * 2;
+        }
+      }, { passive: true });
+
+      // Offscreen procedural Moon Texture for crisp 60fps performance
+      const moonCanvas = document.createElement('canvas');
+      const moonCtx = moonCanvas.getContext('2d');
+      const MOON_TEX_SIZE = 512;
+      moonCanvas.width = MOON_TEX_SIZE;
+      moonCanvas.height = MOON_TEX_SIZE;
+
+      function buildMoonTexture() {
+        const cx = MOON_TEX_SIZE / 2;
+        const cy = MOON_TEX_SIZE / 2;
+        const r = MOON_TEX_SIZE * 0.46;
+
+        moonCtx.clearRect(0, 0, MOON_TEX_SIZE, MOON_TEX_SIZE);
+
+        // Base warm golden gradient
+        const baseGrad = moonCtx.createRadialGradient(
+          cx - r * 0.25, cy - r * 0.25, r * 0.05,
+          cx, cy, r
+        );
+        baseGrad.addColorStop(0, '#FFF7D6');
+        baseGrad.addColorStop(0.35, '#F8CE73');
+        baseGrad.addColorStop(0.75, '#D98E2B');
+        baseGrad.addColorStop(0.95, '#B56718');
+        baseGrad.addColorStop(1, '#8F490E');
+
+        moonCtx.save();
+        moonCtx.beginPath();
+        moonCtx.arc(cx, cy, r, 0, Math.PI * 2);
+        moonCtx.fillStyle = baseGrad;
+        moonCtx.fill();
+        moonCtx.clip();
+
+        // Lunar Maria (dark dramatic patches matching the reference moon)
+        const maria = [
+          { x: -0.28, y: -0.18, rx: 0.34, ry: 0.26, rot: -0.3, alpha: 0.24 },
+          { x: -0.05, y: -0.32, rx: 0.25, ry: 0.18, rot: 0.2, alpha: 0.20 },
+          { x: 0.22, y: -0.12, rx: 0.28, ry: 0.32, rot: 0.4, alpha: 0.22 },
+          { x: 0.32, y: 0.16, rx: 0.22, ry: 0.25, rot: -0.2, alpha: 0.26 },
+          { x: -0.18, y: 0.22, rx: 0.30, ry: 0.20, rot: 0.15, alpha: 0.18 },
+          { x: 0.05, y: 0.05, rx: 0.18, ry: 0.15, rot: 0.5, alpha: 0.16 }
+        ];
+
+        maria.forEach(m => {
+          moonCtx.save();
+          moonCtx.translate(cx + m.x * r, cy + m.y * r);
+          moonCtx.rotate(m.rot);
+          const g = moonCtx.createRadialGradient(0, 0, 2, 0, 0, m.rx * r);
+          g.addColorStop(0, `rgba(92, 46, 10, ${m.alpha})`);
+          g.addColorStop(0.65, `rgba(120, 62, 16, ${m.alpha * 0.65})`);
+          g.addColorStop(1, 'rgba(120, 62, 16, 0)');
+          moonCtx.fillStyle = g;
+          moonCtx.beginPath();
+          moonCtx.ellipse(0, 0, m.rx * r, m.ry * r, 0, 0, Math.PI * 2);
+          moonCtx.fill();
+          moonCtx.restore();
+        });
+
+        // Detailed Craters & Ray ejecta (like Tycho & Copernicus in the uploaded artwork)
+        const craters = [
+          { x: -0.34, y: 0.08, cr: 0.055, bright: true },
+          { x: 0.38, y: -0.04, cr: 0.07, bright: true },
+          { x: -0.12, y: -0.08, cr: 0.045, bright: false },
+          { x: 0.15, y: 0.32, cr: 0.05, bright: true },
+          { x: -0.22, y: -0.36, cr: 0.04, bright: false },
+          { x: 0.26, y: -0.32, cr: 0.045, bright: false },
+          { x: 0.02, y: 0.24, cr: 0.035, bright: false },
+          { x: -0.42, y: -0.12, cr: 0.038, bright: false },
+          { x: 0.44, y: 0.12, cr: 0.042, bright: false }
+        ];
+
+        craters.forEach(c => {
+          const px = cx + c.x * r;
+          const py = cy + c.y * r;
+          const rad = c.cr * r;
+
+          if (c.bright) {
+            // Luminous ray burst
+            const rayGrad = moonCtx.createRadialGradient(px, py, rad * 0.2, px, py, rad * 3.2);
+            rayGrad.addColorStop(0, 'rgba(255, 250, 224, 0.55)');
+            rayGrad.addColorStop(0.4, 'rgba(255, 232, 165, 0.18)');
+            rayGrad.addColorStop(1, 'rgba(255, 232, 165, 0)');
+            moonCtx.fillStyle = rayGrad;
+            moonCtx.beginPath();
+            moonCtx.arc(px, py, rad * 3.2, 0, Math.PI * 2);
+            moonCtx.fill();
+          }
+
+          // Crater rim & shadow
+          moonCtx.beginPath();
+          moonCtx.arc(px, py, rad, 0, Math.PI * 2);
+          moonCtx.fillStyle = 'rgba(110, 56, 12, 0.28)';
+          moonCtx.fill();
+
+          moonCtx.beginPath();
+          moonCtx.arc(px + rad * 0.15, py + rad * 0.15, rad * 0.85, 0, Math.PI * 2);
+          moonCtx.strokeStyle = 'rgba(255, 244, 198, 0.35)';
+          moonCtx.lineWidth = 1.5;
+          moonCtx.stroke();
+        });
+
+        // Subtle inner rim glow
+        const rimGrad = moonCtx.createRadialGradient(cx, cy, r * 0.84, cx, cy, r);
+        rimGrad.addColorStop(0, 'rgba(255, 244, 200, 0)');
+        rimGrad.addColorStop(0.85, 'rgba(255, 236, 175, 0.25)');
+        rimGrad.addColorStop(1, 'rgba(255, 248, 220, 0.65)');
+        moonCtx.fillStyle = rimGrad;
+        moonCtx.beginPath();
+        moonCtx.arc(cx, cy, r, 0, Math.PI * 2);
+        moonCtx.fill();
+
+        moonCtx.restore();
+      }
+      buildMoonTexture();
+
+      // Stars & Drifting Cloud Puffs
+      let stars = [];
+      let clouds = [];
+      let mistParticles = [];
+
+      function initParticles() {
+        stars = Array.from({ length: 130 }, () => ({
+          x: Math.random(),
+          y: Math.random() * 0.72,
+          size: Math.random() * 1.6 + 0.4,
+          phase: Math.random() * Math.PI * 2,
+          speed: 0.5 + Math.random() * 1.5
+        }));
+
+        // Dramatic cumulus clouds flanking the moon (left & right lower banks like the image)
+        clouds = [
+          // Left illuminated cumulus bank
+          { x: 0.12, y: 0.56, r: 0.17, speed: 0.0045, layer: 'back', warm: 0.9 },
+          { x: 0.23, y: 0.60, r: 0.19, speed: 0.0055, layer: 'back', warm: 1.0 },
+          { x: 0.04, y: 0.64, r: 0.21, speed: 0.0038, layer: 'front', warm: 0.75 },
+          { x: 0.29, y: 0.67, r: 0.16, speed: 0.0062, layer: 'front', warm: 0.95 },
+          // Right illuminated cumulus bank
+          { x: 0.84, y: 0.54, r: 0.18, speed: -0.0042, layer: 'back', warm: 0.95 },
+          { x: 0.94, y: 0.61, r: 0.22, speed: -0.005, layer: 'back', warm: 0.85 },
+          { x: 0.76, y: 0.65, r: 0.16, speed: -0.0058, layer: 'front', warm: 1.0 },
+          { x: 0.90, y: 0.69, r: 0.20, speed: -0.0035, layer: 'front', warm: 0.7 },
+          // Upper wispy dark-gold clouds
+          { x: 0.18, y: 0.22, r: 0.16, speed: 0.003, layer: 'back', warm: 0.45 },
+          { x: 0.86, y: 0.19, r: 0.18, speed: -0.0032, layer: 'back', warm: 0.5 }
+        ];
+
+        mistParticles = Array.from({ length: 28 }, () => ({
+          x: Math.random(),
+          y: 0.73 + Math.random() * 0.14,
+          w: 0.14 + Math.random() * 0.22,
+          h: 0.018 + Math.random() * 0.025,
+          speed: (Math.random() * 0.012 + 0.004) * (Math.random() > 0.5 ? 1 : -1),
+          alpha: 0.05 + Math.random() * 0.09
+        }));
+      }
+
+      function resize() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      window.addEventListener('resize', resize);
+      resize();
+      initParticles();
+
+      // Helper: Draw a volumetric sunlit cumulus cloud puff
+      function drawCloudPuff(cx, cy, radius, warmIntensity, moonX, moonY) {
+        // Direction toward the moon for golden rim light
+        const dx = moonX - cx;
+        const dy = moonY - cy;
+        const dist = Math.hypot(dx, dy) || 1;
+        const nx = dx / dist;
+        const ny = dy / dist;
+
+        const subPuffs = [
+          { ox: 0, oy: 0, sr: 1.0 },
+          { ox: -0.55, oy: 0.18, sr: 0.72 },
+          { ox: 0.58, oy: 0.15, sr: 0.76 },
+          { ox: -0.25, oy: -0.35, sr: 0.68 },
+          { ox: 0.28, oy: -0.30, sr: 0.65 }
+        ];
+
+        subPuffs.forEach(p => {
+          const px = cx + p.ox * radius;
+          const py = cy + p.oy * radius;
+          const pr = radius * p.sr;
+
+          const grad = ctx.createRadialGradient(
+            px + nx * pr * 0.42,
+            py + ny * pr * 0.42,
+            pr * 0.08,
+            px,
+            py,
+            pr
+          );
+
+          const goldAlpha = Math.min(0.85, 0.55 * warmIntensity);
+          grad.addColorStop(0, `rgba(255, 232, 175, ${goldAlpha})`);
+          grad.addColorStop(0.32, `rgba(218, 152, 68, ${goldAlpha * 0.72})`);
+          grad.addColorStop(0.68, 'rgba(34, 42, 62, 0.78)');
+          grad.addColorStop(1, 'rgba(10, 14, 26, 0)');
+
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(px, py, pr, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      }
+
+      /**
+       * Draw the Majestic 3-Masted Tall Sailing Ship (Galleon / Frigate)
+       * Positioned slightly right-of-center on desktop so left side holds hero text cleanly,
+       * and centered on mobile, framed directly in front of the golden full moon!
+       */
+      function drawSailingShip(shipX, waterlineY, scale, time) {
+        const pitchAngle = Math.sin(time * 1.15) * 0.022;
+        const heaveY = Math.sin(time * 1.55 + 0.6) * 4.5 * scale;
+        const windBillow = Math.sin(time * 2.1) * 4.5 + Math.cos(time * 1.3) * 2.5;
+
+        ctx.save();
+        ctx.translate(shipX, waterlineY + heaveY);
+        ctx.rotate(pitchAngle);
+        ctx.scale(scale, scale);
+
+        // --- 1. RIGGING & SHROUDS (Fine dark web lines silhouetted against the moon) ---
+        ctx.strokeStyle = 'rgba(12, 16, 26, 0.85)';
+        ctx.lineWidth = 1.1;
+
+        const mainMastX = -8;
+        const foreMastX = -58;
+        const mizzenMastX = 52;
+
+        // Forestays & Backstays
+        const stays = [
+          [-168, -42, foreMastX, -210],
+          [-168, -42, mainMastX, -268],
+          [-125, -34, foreMastX, -155],
+          [foreMastX, -210, mainMastX, -268],
+          [foreMastX, -155, mainMastX, -205],
+          [mainMastX, -268, mizzenMastX, -195],
+          [mizzenMastX, -195, 118, -44],
+          [mainMastX, -268, 115, -42]
+        ];
+
+        stays.forEach(([x1, y1, x2, y2]) => {
+          ctx.beginPath();
+          ctx.moveTo(x1, y1);
+          ctx.quadraticCurveTo((x1 + x2) * 0.5, (y1 + y2) * 0.5 + 6, x2, y2);
+          ctx.stroke();
+        });
+
+        // Ratlines / Shroud ladders
+        function drawShrouds(topX, topY, baseLeft, baseRight, baseY) {
+          const strands = 5;
+          for (let i = 0; i <= strands; i++) {
+            const bx = baseLeft + ((baseRight - baseLeft) * i) / strands;
+            ctx.beginPath();
+            ctx.moveTo(topX, topY);
+            ctx.lineTo(bx, baseY);
+            ctx.stroke();
+          }
+          // Horizontal ratline rungs
+          ctx.lineWidth = 0.65;
+          for (let r = 0.15; r < 0.95; r += 0.08) {
+            const lx = topX + (baseLeft - topX) * r;
+            const rx = topX + (baseRight - topX) * r;
+            const ry = topY + (baseY - topY) * r;
+            ctx.beginPath();
+            ctx.moveTo(lx, ry);
+            ctx.lineTo(rx, ry);
+            ctx.stroke();
+          }
+          ctx.lineWidth = 1.1;
+        }
+
+        drawShrouds(foreMastX, -155, -78, -38, -28);
+        drawShrouds(mainMastX, -200, -34, 22, -28);
+        drawShrouds(mizzenMastX, -145, 34, 74, -32);
+
+        // --- 2. MASTS & YARDARMS ---
+        ctx.strokeStyle = '#0B0F1A';
+        ctx.lineCap = 'round';
+
+        // Mainmast (tallest, piercing top of moon)
+        ctx.lineWidth = 4.5;
+        ctx.beginPath();
+        ctx.moveTo(mainMastX, -18);
+        ctx.lineTo(mainMastX, -278);
+        ctx.stroke();
+
+        // Foremast
+        ctx.lineWidth = 3.8;
+        ctx.beginPath();
+        ctx.moveTo(foreMastX, -22);
+        ctx.lineTo(foreMastX, -218);
+        ctx.stroke();
+
+        // Mizzenmast
+        ctx.lineWidth = 3.2;
+        ctx.beginPath();
+        ctx.moveTo(mizzenMastX, -25);
+        ctx.lineTo(mizzenMastX, -202);
+        ctx.stroke();
+
+        // Bowsprit (long dramatic angled spar at front-left)
+        ctx.lineWidth = 4.2;
+        ctx.beginPath();
+        ctx.moveTo(-78, -22);
+        ctx.lineTo(-175, -52);
+        ctx.stroke();
+
+        // --- 3. BILLOWING DARK SILK/CANVAS SAILS WITH GOLDEN RIM HIGHLIGHT ---
+        function drawSquareSail(cx, topY, bottomY, topW, bottomW, billow) {
+          const curve = billow * 0.45;
+          ctx.save();
+          ctx.beginPath();
+          ctx.moveTo(cx - topW / 2, topY);
+          ctx.quadraticCurveTo(cx, topY + 4, cx + topW / 2, topY);
+          ctx.quadraticCurveTo(cx + bottomW / 2 + curve, (topY + bottomY) * 0.5, cx + bottomW / 2, bottomY);
+          ctx.quadraticCurveTo(cx, bottomY - 9, cx - bottomW / 2, bottomY);
+          ctx.quadraticCurveTo(cx - bottomW / 2 + curve * 0.85, (topY + bottomY) * 0.5, cx - topW / 2, topY);
+          ctx.closePath();
+
+          // Dark midnight-indigo fabric with subtle warm moonlight translucency
+          const sailGrad = ctx.createLinearGradient(cx - bottomW / 2, topY, cx + bottomW / 2, bottomY);
+          sailGrad.addColorStop(0, '#1A2436');
+          sailGrad.addColorStop(0.45, '#0D1320');
+          sailGrad.addColorStop(0.85, '#080C15');
+          sailGrad.addColorStop(1, '#1E1A18');
+          ctx.fillStyle = sailGrad;
+          ctx.fill();
+
+          // Subtle golden moonlight rim along sail edges
+          ctx.strokeStyle = 'rgba(246, 200, 110, 0.32)';
+          ctx.lineWidth = 1.1;
+          ctx.stroke();
+
+          // Vertical sail panel seams
+          ctx.strokeStyle = 'rgba(255, 241, 193, 0.08)';
+          ctx.lineWidth = 0.7;
+          [-0.25, 0, 0.25].forEach(ratio => {
+            ctx.beginPath();
+            ctx.moveTo(cx + topW * ratio, topY + 2);
+            ctx.quadraticCurveTo(
+              cx + bottomW * ratio + curve * 0.8,
+              (topY + bottomY) * 0.5,
+              cx + bottomW * ratio,
+              bottomY - 4
+            );
+            ctx.stroke();
+          });
+
+          // Wooden yardarm spar across top
+          ctx.strokeStyle = '#090D16';
+          ctx.lineWidth = 2.6;
+          ctx.beginPath();
+          ctx.moveTo(cx - topW * 0.56, topY);
+          ctx.lineTo(cx + topW * 0.56, topY);
+          ctx.stroke();
+
+          ctx.restore();
+        }
+
+        // Jib / Triangular Headsails on Bowsprit
+        function drawJibSail(x1, y1, x2, y2, x3, y3, billow) {
+          ctx.save();
+          ctx.beginPath();
+          ctx.moveTo(x1, y1);
+          ctx.quadraticCurveTo((x1 + x2) / 2 - billow * 0.35, (y1 + y2) / 2, x2, y2);
+          ctx.quadraticCurveTo((x2 + x3) / 2 + billow * 0.25, (y2 + y3) / 2 + 4, x3, y3);
+          ctx.closePath();
+
+          const g = ctx.createLinearGradient(x1, y1, x3, y3);
+          g.addColorStop(0, '#232F44');
+          g.addColorStop(1, '#0B101B');
+          ctx.fillStyle = g;
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(246, 200, 110, 0.35)';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        // Headsails
+        drawJibSail(-165, -46, -64, -198, -82, -55, windBillow);
+        drawJibSail(-132, -38, -62, -148, -74, -44, windBillow * 0.85);
+
+        // Mizzenmast Sails (Rear)
+        drawSquareSail(mizzenMastX, -182, -134, 46, 56, windBillow * 0.85);
+        drawSquareSail(mizzenMastX, -126, -68, 60, 74, windBillow * 0.95);
+
+        // Mainmast Sails (Center Grand Sails)
+        drawSquareSail(mainMastX, -242, -192, 54, 66, windBillow * 0.9);
+        drawSquareSail(mainMastX, -184, -122, 74, 92, windBillow * 1.1);
+        drawSquareSail(mainMastX, -114, -48, 94, 112, windBillow * 1.15);
+
+        // Foremast Sails (Front-Left)
+        drawSquareSail(foreMastX, -195, -148, 48, 58, windBillow * 0.9);
+        drawSquareSail(foreMastX, -140, -76, 66, 80, windBillow * 1.05);
+
+        // Crow's nests & Pennant flag at top of mainmast
+        ctx.fillStyle = '#090C14';
+        ctx.fillRect(mainMastX - 9, -190, 18, 4);
+        ctx.fillRect(foreMastX - 7, -146, 14, 4);
+
+        // Fluttering golden-black pennant at mainmast peak
+        ctx.beginPath();
+        ctx.moveTo(mainMastX, -276);
+        ctx.quadraticCurveTo(
+          mainMastX + 16,
+          -279 + Math.sin(time * 5) * 3,
+          mainMastX + 30,
+          -273 + Math.cos(time * 5) * 4
+        );
+        ctx.lineTo(mainMastX, -271);
+        ctx.closePath();
+        ctx.fillStyle = '#E5A93C';
+        ctx.fill();
+
+        // --- 4. ORNATE DARK-WOOD & GOLD FILIGREE HULL ---
+        ctx.save();
+        ctx.beginPath();
+        // Dramatic sweeping galleon silhouette: high carved stern on right, curved prow on left
+        ctx.moveTo(-98, -24); // Prow tip
+        ctx.quadraticCurveTo(-84, -8, -74, 4); // Cutwater entering sea
+        ctx.lineTo(94, 4); // Keel at waterline
+        ctx.quadraticCurveTo(108, -14, 116, -42); // High stern transom
+        ctx.lineTo(74, -36); // Poop deck step
+        ctx.lineTo(54, -26); // Quarterdeck
+        ctx.lineTo(-56, -24); // Main waist
+        ctx.quadraticCurveTo(-78, -28, -98, -24); // Forecastle curve
+        ctx.closePath();
+
+        const hullGrad = ctx.createLinearGradient(-90, -35, 110, 5);
+        hullGrad.addColorStop(0, '#0C1220');
+        hullGrad.addColorStop(0.5, '#070A12');
+        hullGrad.addColorStop(1, '#121826');
+        ctx.fillStyle = hullGrad;
+        ctx.fill();
+
+        // Golden Filigree Trim & Ornate Scrollwork along the hull (matching the artwork!)
+        ctx.strokeStyle = '#E5A93C';
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        ctx.moveTo(-95, -21);
+        ctx.quadraticCurveTo(-15, -17, 113, -36);
+        ctx.stroke();
+
+        ctx.strokeStyle = 'rgba(246, 200, 110, 0.65)';
+        ctx.lineWidth = 1.1;
+        ctx.beginPath();
+        ctx.moveTo(-88, -13);
+        ctx.quadraticCurveTo(-10, -10, 108, -26);
+        ctx.stroke();
+
+        // Golden Figurehead & Bow Scrollwork
+        ctx.strokeStyle = '#F6C86E';
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        ctx.moveTo(-82, -16);
+        ctx.bezierCurveTo(-108, -20, -118, -32, -104, -36);
+        ctx.stroke();
+
+        // Warm Flickering Lanterns & Gunport Lights along the hull
+        const flicker = 0.78 + Math.sin(time * 7.5) * 0.14 + Math.cos(time * 11) * 0.08;
+        const lanternPositions = [
+          { x: 112, y: -44, r: 3.2 }, // Stern grand lantern
+          { x: 96, y: -30, r: 2.2 },
+          { x: 78, y: -27, r: 2.0 },
+          { x: 58, y: -22, r: 1.9 },
+          { x: 35, y: -19, r: 1.8 },
+          { x: 12, y: -18, r: 1.8 },
+          { x: -12, y: -18, r: 1.8 },
+          { x: -36, y: -19, r: 1.8 },
+          { x: -64, y: -21, r: 2.1 }
+        ];
+
+        lanternPositions.forEach(l => {
+          const glow = ctx.createRadialGradient(l.x, l.y, 0.5, l.x, l.y, l.r * 5.5);
+          glow.addColorStop(0, `rgba(255, 236, 170, ${0.95 * flicker})`);
+          glow.addColorStop(0.4, `rgba(235, 155, 45, ${0.45 * flicker})`);
+          glow.addColorStop(1, 'rgba(235, 155, 45, 0)');
+          ctx.fillStyle = glow;
+          ctx.beginPath();
+          ctx.arc(l.x, l.y, l.r * 5.5, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = '#FFF5CC';
+          ctx.beginPath();
+          ctx.arc(l.x, l.y, l.r * 0.65, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        ctx.restore();
+        ctx.restore();
+      }
+
+      /**
+       * Draw the Dark Reflective Ocean, Shimmering Golden Moonlight Path & Ship Wake
+       */
+      function drawOcean(horizonY, moonX, shipX, shipScale, time) {
+        const seaHeight = height - horizonY;
+
+        // 1. Deep Ocean Base Gradient
+        const seaGrad = ctx.createLinearGradient(0, horizonY, 0, height);
+        seaGrad.addColorStop(0, '#0B1324');
+        seaGrad.addColorStop(0.18, '#070D1A');
+        seaGrad.addColorStop(0.6, '#040811');
+        seaGrad.addColorStop(1, '#020409');
+        ctx.fillStyle = seaGrad;
+        ctx.fillRect(0, horizonY, width, seaHeight);
+
+        // 2. Horizon Golden Mist Glow beneath the Moon
+        const horizonGlow = ctx.createRadialGradient(
+          moonX, horizonY, 10,
+          moonX, horizonY, width * 0.45
+        );
+        horizonGlow.addColorStop(0, 'rgba(246, 200, 110, 0.34)');
+        horizonGlow.addColorStop(0.45, 'rgba(217, 138, 43, 0.12)');
+        horizonGlow.addColorStop(1, 'rgba(11, 19, 36, 0)');
+        ctx.fillStyle = horizonGlow;
+        ctx.fillRect(0, horizonY - 2, width, seaHeight * 0.55);
+
+        // 3. Shimmering Golden Moonlight Path on Rippling Water
+        const rows = 75;
+        for (let i = 0; i < rows; i++) {
+          const t = i / rows;
+          const easeT = Math.pow(t, 1.35);
+          const y = horizonY + easeT * seaHeight;
+          const spread = (28 + easeT * 170) * (0.85 + Math.sin(time * 1.8 + i * 0.45) * 0.15);
+          const waveOffset = Math.sin(time * 2.4 + i * 0.65) * (8 + easeT * 24);
+          const ribbonH = Math.max(1.2, 1.2 + easeT * 4.5);
+          const alpha = (1 - t * 0.72) * (0.22 + Math.abs(Math.sin(time * 2.1 + i * 0.9)) * 0.36);
+
+          const rx = moonX + waveOffset;
+          const grad = ctx.createLinearGradient(rx - spread, y, rx + spread, y);
+          grad.addColorStop(0, 'rgba(246, 200, 110, 0)');
+          grad.addColorStop(0.3, `rgba(229, 169, 60, ${alpha * 0.65})`);
+          grad.addColorStop(0.5, `rgba(255, 241, 193, ${alpha})`);
+          grad.addColorStop(0.7, `rgba(229, 169, 60, ${alpha * 0.65})`);
+          grad.addColorStop(1, 'rgba(246, 200, 110, 0)');
+
+          ctx.fillStyle = grad;
+          ctx.fillRect(rx - spread, y, spread * 2, ribbonH);
+        }
+
+        // 4. Dark Silhouette Reflection of the Ship Hull on the Water
+        const reflectionY = horizonY + seaHeight * 0.18;
+        ctx.save();
+        for (let r = 0; r < 22; r++) {
+          const rt = r / 22;
+          const ry = reflectionY + rt * 78 * shipScale;
+          const rw = (96 - rt * 32) * shipScale;
+          const rx = shipX + Math.sin(time * 3 + r * 0.8) * (4 + rt * 10);
+          ctx.fillStyle = `rgba(3, 5, 11, ${0.55 - rt * 0.42})`;
+          ctx.fillRect(rx - rw, ry, rw * 2, 2.5);
+        }
+        ctx.restore();
+
+        // 5. Rolling Foreground Ocean Swells
+        const waveLayers = [
+          { yRatio: 0.16, amp: 4, freq: 0.014, speed: 1.3, color: 'rgba(13, 23, 44, 0.55)' },
+          { yRatio: 0.36, amp: 7, freq: 0.011, speed: 1.7, color: 'rgba(9, 16, 32, 0.72)' },
+          { yRatio: 0.62, amp: 11, freq: 0.0085, speed: 2.1, color: 'rgba(6, 11, 22, 0.85)' },
+          { yRatio: 0.84, amp: 15, freq: 0.0065, speed: 2.6, color: 'rgba(4, 7, 15, 0.95)' }
+        ];
+
+        waveLayers.forEach((wl, idx) => {
+          const baseY = horizonY + seaHeight * wl.yRatio;
+          ctx.beginPath();
+          ctx.moveTo(0, height);
+          for (let x = 0; x <= width + 30; x += 25) {
+            const wy =
+              baseY +
+              Math.sin(x * wl.freq + time * wl.speed + idx) * wl.amp +
+              Math.cos(x * wl.freq * 1.8 - time * wl.speed * 0.7) * (wl.amp * 0.45);
+            ctx.lineTo(x, wy);
+          }
+          ctx.lineTo(width, height);
+          ctx.closePath();
+          ctx.fillStyle = wl.color;
+          ctx.fill();
+
+          // Subtle golden crest highlight near the moonlight path
+          ctx.strokeStyle = 'rgba(246, 200, 110, 0.09)';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        });
+
+        // 6. Luminous Sea-Foam Wake & Bow Spray around the Ship's Hull
+        const wakeY = horizonY + seaHeight * 0.18;
+        ctx.save();
+        for (let w = 0; w < 14; w++) {
+          const progress = ((time * 0.45 + w / 14) % 1);
+          const foamX = shipX - 65 * shipScale + progress * 220 * shipScale;
+          const foamY = wakeY + Math.sin(time * 3.2 + w) * 2.5 + progress * 12;
+          const foamW = (18 + progress * 48) * shipScale;
+          const foamAlpha = (1 - progress) * 0.42;
+
+          const fGrad = ctx.createLinearGradient(foamX - foamW, foamY, foamX + foamW, foamY);
+          fGrad.addColorStop(0, 'rgba(255, 244, 210, 0)');
+          fGrad.addColorStop(0.5, `rgba(255, 241, 205, ${foamAlpha})`);
+          fGrad.addColorStop(1, 'rgba(255, 244, 210, 0)');
+          ctx.fillStyle = fGrad;
+          ctx.fillRect(foamX - foamW, foamY, foamW * 2, 2.2);
+        }
+        ctx.restore();
+      }
+
+      // Main 60FPS Animation Loop
+      let startTime = performance.now();
+      function render(now) {
+        const time = (now - startTime) * 0.001;
+
+        // Smooth pointer interpolation
+        pointer.x += (pointer.targetX - pointer.x) * 0.05;
+        pointer.y += (pointer.targetY - pointer.y) * 0.05;
+
+        // Responsive positioning: keep Moon & Ship prominently visible on both desktop & mobile
+        const isMobile = width < 768;
+        const horizonY = height * (isMobile ? 0.72 : 0.75);
+
+        // Centerpiece coordinates (slightly right on desktop so left hero headline shines)
+        const baseCenterX = width * (isMobile ? 0.52 : 0.63);
+        const moonX = baseCenterX - pointer.x * 16;
+        const moonY = height * (isMobile ? 0.36 : 0.39) - pointer.y * 12;
+        const moonRadius = Math.min(width * (isMobile ? 0.34 : 0.23), height * 0.31);
+
+        // 1. Deep Midnight Sky Gradient
+        const skyGrad = ctx.createLinearGradient(0, 0, 0, horizonY);
+        skyGrad.addColorStop(0, '#04070F');
+        skyGrad.addColorStop(0.45, '#091122');
+        skyGrad.addColorStop(0.85, '#131D33');
+        skyGrad.addColorStop(1, '#1E2536');
+        ctx.fillStyle = skyGrad;
+        ctx.fillRect(0, 0, width, horizonY + 4);
+
+        // 2. Twinkling Stars
+        stars.forEach(s => {
+          const sx = ((s.x * width - pointer.x * 6) + width) % width;
+          const sy = s.y * horizonY - pointer.y * 4;
+          const twinkle = 0.35 + 0.65 * Math.abs(Math.sin(time * s.speed + s.phase));
+          ctx.fillStyle = `rgba(255, 244, 214, ${twinkle * 0.75})`;
+          ctx.beginPath();
+          ctx.arc(sx, sy, s.size, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        // 3. Massive Radial Golden Atmospheric Halo around the Moon
+        const outerHalo = ctx.createRadialGradient(
+          moonX, moonY, moonRadius * 0.85,
+          moonX, moonY, moonRadius * 2.8
+        );
+        outerHalo.addColorStop(0, 'rgba(255, 232, 168, 0.55)');
+        outerHalo.addColorStop(0.28, 'rgba(229, 169, 60, 0.24)');
+        outerHalo.addColorStop(0.62, 'rgba(184, 115, 30, 0.08)');
+        outerHalo.addColorStop(1, 'rgba(9, 17, 34, 0)');
+        ctx.fillStyle = outerHalo;
+        ctx.beginPath();
+        ctx.arc(moonX, moonY, moonRadius * 2.8, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 4. Back Layer Cumulus Clouds
+        clouds.filter(c => c.layer === 'back').forEach(c => {
+          c.x = (c.x + c.speed * 0.016 + 1) % 1;
+          const cx = c.x * width - pointer.x * 24;
+          const cy = c.y * height - pointer.y * 14;
+          drawCloudPuff(cx, cy, c.r * Math.min(width, height * 1.3), c.warm, moonX, moonY);
+        });
+
+        // 5. Render Detailed Golden Full Moon
+        ctx.save();
+        ctx.shadowColor = 'rgba(255, 224, 145, 0.75)';
+        ctx.shadowBlur = 45;
+        ctx.drawImage(
+          moonCanvas,
+          moonX - moonRadius,
+          moonY - moonRadius,
+          moonRadius * 2,
+          moonRadius * 2
+        );
+        ctx.restore();
+
+        // 6. Front Layer Lit Clouds Framing the Lower Edges of the Moon
+        clouds.filter(c => c.layer === 'front').forEach(c => {
+          c.x = (c.x + c.speed * 0.016 + 1) % 1;
+          const cx = c.x * width - pointer.x * 36;
+          const cy = c.y * height - pointer.y * 20;
+          drawCloudPuff(cx, cy, c.r * Math.min(width, height * 1.3), c.warm, moonX, moonY);
+        });
+
+        // 7. Ocean Surface, Golden Reflections & Waves
+        const shipScale = Math.max(0.72, Math.min(1.28, moonRadius / 185));
+        const shipX = baseCenterX - 10 * shipScale + pointer.x * 28 + Math.sin(time * 0.45) * 14;
+        const shipWaterlineY = horizonY + (height - horizonY) * 0.18 + pointer.y * 10;
+
+        drawOcean(horizonY, moonX, shipX, shipScale, time);
+
+        // 8. Majestic Sailing Galleon Silhouetted Against the Moon
+        drawSailingShip(shipX, shipWaterlineY, shipScale, time);
+
+        // 9. Drifting Low Sea Mist across the Waterline
+        mistParticles.forEach(m => {
+          m.x = (m.x + m.speed * 0.016 + 1) % 1;
+          const mx = m.x * width + pointer.x * 42;
+          const my = m.y * height;
+          const mw = m.w * width;
+          const mh = m.h * height;
+          const mGrad = ctx.createRadialGradient(mx, my, 4, mx, my, mw * 0.5);
+          mGrad.addColorStop(0, `rgba(235, 210, 165, ${m.alpha})`);
+          mGrad.addColorStop(1, 'rgba(235, 210, 165, 0)');
+          ctx.fillStyle = mGrad;
+          ctx.beginPath();
+          ctx.ellipse(mx, my, mw * 0.5, mh, 0, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        requestAnimationFrame(render);
+      }
+
+      requestAnimationFrame(render);
+    })();
+
+    /**
+     * 2. TRAVEL CATALOG DATA & INTERACTIVE UI LOGIC (UZBEK)
+     */
+    const toursData = [
+      {
+        id: 1,
+        title: "Amalfi Sohillari va Sitsiliya Tungi Kruizi",
+        region: "O'rta Yer dengizi",
+        duration: "8 kun / 7 kecha",
+        price: "$1,650",
+        rating: "4.9",
+        badge: "Eng mashhur",
+        image: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=900&q=80",
+        fallback: "https://placehold.co/800x520/0B1324/E5A93C?text=Amalfi+Sohillari",
+        desc: "Positano qoyalari, Kapri g‘orlari va oy nuri ostidagi O‘rta Yer dengizi bo‘ylab romantik sayohat."
+      },
+      {
+        id: 2,
+        title: "Karib Orollari: Sirli Laguna Ekspeditsiyasi",
+        region: "Karib orollari",
+        duration: "10 kun / 9 kecha",
+        price: "$2,290",
+        rating: "5.0",
+        badge: "VIP Kruiz",
+        image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=900&q=80",
+        fallback: "https://placehold.co/800x520/0B1324/E5A93C?text=Karib+Orollari",
+        desc: "Sent-Lyusiya va Barbadosning zumrad suvlari, xususiy marjon riflari va yulduzli osmon kechalari."
+      },
+      {
+        id: 3,
+        title: "Norvegiya Fyordlari va Shimol Yog‘dusi",
+        region: "Norvegiya fyordlari",
+        duration: "7 kun / 6 kecha",
+        price: "$1,980",
+        rating: "4.9",
+        badge: "Eksklyuziv",
+        image: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=900&q=80",
+        fallback: "https://placehold.co/800x520/0B1324/E5A93C?text=Norvegiya+Fyordlari",
+        desc: "Baland qoyalar orasidagi sokin fyordlar, sharsharalar va tungi osmondagi zumrad yog‘dular manzarasi."
+      },
+      {
+        id: 4,
+        title: "Maldiv Orollari: Oltin Oy Yaxtasi",
+        region: "Maldiv orollari",
+        duration: "6 kun / 5 kecha",
+        price: "$2,450",
+        rating: "5.0",
+        badge: "Premium",
+        image: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=900&q=80",
+        fallback: "https://placehold.co/800x520/0B1324/E5A93C?text=Maldiv+Orollari",
+        desc: "Baa atolli bo‘ylab shaxsiy yaxtada sayr, suv ustidagi villalar va okean o‘rtasidagi kechki ovqat."
+      },
+      {
+        id: 5,
+        title: "Santorini va Egey Dengizi Marvaridlari",
+        region: "O'rta Yer dengizi",
+        duration: "7 kun / 6 kecha",
+        price: "$1,540",
+        rating: "4.8",
+        badge: "Yangi mavsum",
+        image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=900&q=80",
+        fallback: "https://placehold.co/800x520/0B1324/E5A93C?text=Santorini+Kruizi",
+        desc: "Oq gumbazli shaharlar, vulqon orollari va quyosh botishini kemaning oltin palubasidan tomosha qilish."
+      },
+      {
+        id: 6,
+        title: "Bagama Orollari: Marvarid Qirg‘oqlari",
+        region: "Karib orollari",
+        duration: "9 kun / 8 kecha",
+        price: "$2,120",
+        rating: "4.9",
+        badge: "Chegirma -15%",
+        image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80",
+        fallback: "https://placehold.co/800x520/0B1324/E5A93C?text=Bagama+Orollari",
+        desc: "Pushti qumli sohillar, sokin ko‘rfazlar va yelkanli kemada unutilmas dengiz sarguzashti."
+      }
+    ];
+
+    const toursGrid = document.getElementById('toursGrid');
+
+    function renderTours(filterRegion = 'all') {
+      const filtered = filterRegion === 'all'
+        ? toursData
+        : toursData.filter(t => t.region === filterRegion);
+
+      toursGrid.innerHTML = filtered.map(tour => `
+        <article class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between group">
+          <div>
+            <div class="relative h-56 overflow-hidden">
+              <img
+                src="${tour.image}"
+                onerror="this.onerror=null;this.src='${tour.fallback}';"
+                alt="${tour.title}"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/20 to-transparent"></div>
+              <span class="absolute top-3.5 left-3.5 px-3 py-1 rounded-full bg-obsidian/80 backdrop-blur-md border border-gold/40 text-[11px] font-semibold text-gold-bright">
+                ${tour.badge}
+              </span>
+              <span class="absolute top-3.5 right-3.5 px-2.5 py-1 rounded-full bg-obsidian/80 backdrop-blur-md text-xs font-bold text-amber-200 flex items-center gap-1">
+                ★ ${tour.rating}
+              </span>
+              <span class="absolute bottom-3 left-4 text-xs font-medium text-gold-light/90">
+                ${tour.region}
+              </span>
+            </div>
+
+            <div class="p-6">
+              <div class="text-xs text-amber-200/65 mb-1.5">${tour.duration}</div>
+              <h3 class="font-serif text-xl font-bold text-white group-hover:text-gold-bright transition-colors leading-snug">
+                ${tour.title}
+              </h3>
+              <p class="mt-2.5 text-sm text-amber-100/75 leading-relaxed">
+                ${tour.desc}
+              </p>
+            </div>
+          </div>
+
+          <div class="px-6 pb-6 pt-3 border-t border-gold/15 flex items-center justify-between">
+            <div>
+              <span class="text-[11px] uppercase tracking-wider text-amber-200/60 block">Narxi</span>
+              <span class="font-serif text-2xl font-bold gold-gradient-text">${tour.price}</span>
+            </div>
+            <button
+              onclick="openBookingModal('${tour.title.replace(/'/g, "\\'")}')"
+              class="px-4 py-2.5 rounded-xl border border-gold/45 bg-gold/10 hover:bg-gold hover:text-obsidian text-gold-bright text-xs font-bold transition cursor-pointer"
+            >
+              Band qilish
+            </button>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    // Initial render
+    renderTours();
+
+    // Filter Pill Buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => {
+          b.classList.remove('bg-gold', 'text-obsidian');
+          b.classList.add('glass-panel', 'text-amber-100');
+        });
+        btn.classList.remove('glass-panel', 'text-amber-100');
+        btn.classList.add('bg-gold', 'text-obsidian');
+        renderTours(btn.dataset.filter);
+      });
+    });
+
+    // Hero Search Form Handler
+    const searchDateInput = document.getElementById('searchDate');
+    const defaultDate = new Date();
+    defaultDate.setDate(defaultDate.getDate() + 14);
+    searchDateInput.value = defaultDate.toISOString().split('T')[0];
+
+    document.getElementById('heroSearchForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const dest = document.getElementById('searchDestination').value;
+      const date = document.getElementById('searchDate').value;
+      const guests = document.getElementById('searchGuests').value;
+
+      // Filter cards smoothly & scroll to results
+      renderTours(dest);
+      document.querySelectorAll('.filter-btn').forEach(b => {
+        if (b.dataset.filter === dest) {
+          b.click();
+        }
+      });
+
+      const targetSection = document.getElementById('yonalishlar');
+      targetSection.scrollIntoView({ behavior: 'smooth' });
+
+      // Pre-fill modal inputs in case user books right away
+      document.getElementById('modalDateInput').value = date;
+      document.getElementById('modalGuestsInput').value = guests;
+    });
+
+    // Cinema Mode Toggle (Hides UI so user can enjoy pure animated ship & moon background)
+    const toggleCameraBtn = document.getElementById('toggleCameraBtn');
+    const exitCinemaBtn = document.getElementById('exitCinemaBtn');
+    const mainWrapper = document.querySelector('.relative.z-10');
+
+    toggleCameraBtn.addEventListener('click', () => {
+      mainWrapper.classList.add('opacity-0', 'pointer-events-none');
+      exitCinemaBtn.classList.remove('hidden');
+    });
+
+    exitCinemaBtn.addEventListener('click', () => {
+      mainWrapper.classList.remove('opacity-0', 'pointer-events-none');
+      exitCinemaBtn.classList.add('hidden');
+    });
+
+    // Booking Modal Controls
+    const bookingModal = document.getElementById('bookingModal');
+    const bookingFormContainer = document.getElementById('bookingFormContainer');
+    const bookingSuccessState = document.getElementById('bookingSuccessState');
+
+    function openBookingModal(tourName = 'Oltin Oy Ostida Tungi Kruiz') {
+      bookingFormContainer.classList.remove('hidden');
+      bookingSuccessState.classList.add('hidden');
+      document.getElementById('modalTourInput').value = tourName;
+      if (!document.getElementById('modalDateInput').value) {
+        document.getElementById('modalDateInput').value = searchDateInput.value;
+      }
+      bookingModal.classList.remove('hidden');
+      bookingModal.classList.add('flex');
+    }
+
+    function closeBookingModal() {
+      bookingModal.classList.add('hidden');
+      bookingModal.classList.remove('flex');
+    }
+
+    bookingModal.addEventListener('click', (e) => {
+      if (e.target === bookingModal) closeBookingModal();
+    });
+
+    document.getElementById('modalBookingForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('modalNameInput').value.trim();
+      const phone = document.getElementById('modalPhoneInput').value.trim();
+      const tour = document.getElementById('modalTourInput').value.trim();
+
+      document.getElementById('bookingSuccessText').textContent =
+        `Hurmatli ${name}, "${tour}" yo‘nalishi bo‘yicha so‘rovingiz qabul qilindi. Tez orada ${phone} raqamiga operatorimiz qo‘ng‘iroq qiladi.`;
+
+      bookingFormContainer.classList.add('hidden');
+      bookingSuccessState.classList.remove('hidden');
+    });
+  </script>
+</body>
+</html>
