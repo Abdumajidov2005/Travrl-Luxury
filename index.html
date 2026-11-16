@@ -59,8 +59,9 @@
       z-index: 1;
       pointer-events: none;
       background:
-        radial-gradient(circle at 58% 42%, rgba(5, 8, 17, 0.04) 0%, rgba(5, 8, 17, 0.45) 55%, rgba(4, 6, 13, 0.88) 100%),
-        linear-gradient(180deg, rgba(5, 8, 17, 0.65) 0%, rgba(5, 8, 17, 0.1) 25%, rgba(5, 8, 17, 0.25) 72%, rgba(5, 8, 17, 0.96) 100%);
+        radial-gradient(circle at 63% 43%, rgba(5, 8, 17, 0.0) 0%, rgba(5, 8, 17, 0.22) 48%, rgba(4, 6, 13, 0.82) 100%),
+        linear-gradient(90deg, rgba(4, 7, 14, 0.78) 0%, rgba(4, 7, 14, 0.35) 38%, rgba(4, 7, 14, 0.0) 65%),
+        linear-gradient(180deg, rgba(5, 8, 17, 0.58) 0%, rgba(5, 8, 17, 0.04) 24%, rgba(5, 8, 17, 0.14) 76%, rgba(5, 8, 17, 0.94) 100%);
     }
 
     /* Glassmorphism panels */
@@ -153,18 +154,18 @@
         <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-amber-100/85">
           <a href="#yonalishlar" class="hover:text-gold-bright transition-colors">Yo‘nalishlar</a>
           <a href="#kruizlar" class="hover:text-gold-bright transition-colors">Kruizlar</a>
-          <a href="#afzalliklar" class="hover:text-gold-bright transition-colors">Nega aynan biz?</a>
-          <a href="#aloqa" class="hover:text-gold-bright transition-colors">Biz haqimizda</a>
+          <a href="#afzalliklar" class="hover:text-gold-bright transition-colors">Sayohat Turlari</a>
+          <a href="#aloqa" class="hover:text-gold-bright transition-colors">Aloqa</a>
         </nav>
 
         <!-- Actions -->
         <div class="flex items-center gap-3">
-          <button id="toggleCameraBtn" title="Kema ko'rinishini yaqinlashtirish" class="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-xl border border-gold/25 bg-obsidian/50 hover:border-gold/60 text-xs text-gold-light/90 transition">
+          <button id="toggleCameraBtn" title="Kema ko'rinishini to'liq ekranda tomosha qilish" class="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-xl border border-gold/25 bg-obsidian/50 hover:border-gold/60 text-xs text-gold-light/90 transition cursor-pointer">
             <svg class="w-4 h-4 text-gold-bright" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
             </svg>
-            <span id="cinemaModeLabel">Sahna rejimi</span>
+            <span id="cinemaModeLabel">To‘liq sahna</span>
           </button>
           <button onclick="openBookingModal()" class="btn-gold px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm tracking-wide cursor-pointer">
             Sayohatni band qilish
@@ -252,7 +253,7 @@
           <div>
             <button type="submit" class="w-full btn-gold py-3 px-5 rounded-xl text-sm font-bold flex items-center justify-center gap-2 cursor-pointer">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-              <span>Tur qidirish</span>
+              <span>Sayohatni topish</span>
             </button>
           </div>
         </form>
@@ -480,29 +481,31 @@
   </div>
 
   <!-- ===================================================================== -->
-  <!-- JAVASCRIPT: CINEMATIC MOTION GRAPHICS CANVAS + TRAVEL APP INTERACTION -->
+  <!-- JAVASCRIPT: PHOTOREALISTIC CINEMATIC MOTION ENGINE + TRAVEL UI LOGIC  -->
   <!-- ===================================================================== -->
   <script>
     /**
-     * 1. HIGH-CRAFT MOTION GRAPHICS ENGINE (Canvas 2D)
-     * Recreates the exact dramatic atmosphere of the reference artwork:
-     * - Deep midnight obsidian sky with twinkling stars
-     * - Massive glowing golden full moon with procedural lunar craters & atmospheric halo
-     * - Layered volumetric backlit storm/cumulus clouds with golden rim-lighting
-     * - Intricate dark-wood & gold-filigree 3-masted tall sailing ship (Galleon/Frigate)
-     *   silhouetted against the golden moon, gently pitching, rolling, billowing sails,
-     *   and glowing warm deck lanterns
-     * - Dark reflective ocean with shimmering golden moonlight path, rolling waves & hull foam
+     * 1. PHOTOREALISTIC CINEMATIC MOTION GRAPHICS ENGINE (Offscreen Hi-Res Textures + Real-Time Physics)
+     * Faithfully recreates the uploaded reference artwork as a living, breathing cinematic photograph:
+     * - 1024x1024 high-detail procedural lunar surface (perlin/fbm maria, terraced craters, Tycho bright ray ejecta)
+     * - Multi-layered volumetric cumulus clouds with sunlit golden rim-lighting & deep charcoal cores
+     * - High-resolution 3/4 front-bow view three-masted Galleon / Frigate:
+     *     * Curved dark-oak planked hull with riveted strakes & warm deck/gunport lanterns
+     *     * Intricate 3D-shaded gold-leaf filigree carvings along the bow, figurehead, beakhead & rails
+     *     * Dense rigging network: shrouds, ratlines, forestays, backstays, braces & blocks
+     *     * Realistic weathered dark-indigo woven canvas square sails & jibs dynamically billowing in the wind
+     * - Realistic ocean surface with perspective wave normals, golden specular moonlight path,
+     *   hull reflection, and churning white bow wave / wake foam
      */
-    (function initOceanMotionGraphics() {
+    (function initPhotorealisticOceanEngine() {
       const canvas = document.getElementById('oceanSceneCanvas');
-      const ctx = canvas.getContext('2d');
+      const ctx = canvas.getContext('2d', { alpha: false });
 
       let width = 0;
       let height = 0;
       let dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-      // Mouse parallax smoothing
+      // Smooth pointer & subtle auto-drift parallax
       const pointer = { x: 0, y: 0, targetX: 0, targetY: 0 };
 
       window.addEventListener('mousemove', (e) => {
@@ -517,158 +520,793 @@
         }
       }, { passive: true });
 
-      // Offscreen procedural Moon Texture for crisp 60fps performance
+      // Deterministic pseudo-random helper for repeatable photorealistic textures
+      function hash2D(x, y) {
+        const n = Math.sin(x * 127.1 + y * 311.7) * 43758.5453123;
+        return n - Math.floor(n);
+      }
+
+      function valueNoise(x, y) {
+        const ix = Math.floor(x);
+        const iy = Math.floor(y);
+        const fx = x - ix;
+        const fy = y - iy;
+        const ux = fx * fx * (3 - 2 * fx);
+        const uy = fy * fy * (3 - 2 * fy);
+        const a = hash2D(ix, iy);
+        const b = hash2D(ix + 1, iy);
+        const c = hash2D(ix, iy + 1);
+        const d = hash2D(ix + 1, iy + 1);
+        return a + (b - a) * ux + (c - a) * uy + (a - b - c + d) * ux * uy;
+      }
+
+      function fbm(x, y, octaves = 5) {
+        let val = 0;
+        let amp = 0.5;
+        let freq = 1;
+        for (let i = 0; i < octaves; i++) {
+          val += amp * valueNoise(x * freq, y * freq);
+          freq *= 2.03;
+          amp *= 0.5;
+        }
+        return val;
+      }
+
+      // =========================================================================
+      // A. HIGH-RES PHOTOREALISTIC GOLDEN MOON TEXTURE (1024x1024)
+      // =========================================================================
+      const MOON_SIZE = 1024;
       const moonCanvas = document.createElement('canvas');
+      moonCanvas.width = MOON_SIZE;
+      moonCanvas.height = MOON_SIZE;
       const moonCtx = moonCanvas.getContext('2d');
-      const MOON_TEX_SIZE = 512;
-      moonCanvas.width = MOON_TEX_SIZE;
-      moonCanvas.height = MOON_TEX_SIZE;
 
-      function buildMoonTexture() {
-        const cx = MOON_TEX_SIZE / 2;
-        const cy = MOON_TEX_SIZE / 2;
-        const r = MOON_TEX_SIZE * 0.46;
+      function buildPhotorealisticMoon() {
+        const cx = MOON_SIZE / 2;
+        const cy = MOON_SIZE / 2;
+        const r = MOON_SIZE * 0.455;
 
-        moonCtx.clearRect(0, 0, MOON_TEX_SIZE, MOON_TEX_SIZE);
+        const imgData = moonCtx.createImageData(MOON_SIZE, MOON_SIZE);
+        const data = imgData.data;
 
-        // Base warm golden gradient
-        const baseGrad = moonCtx.createRadialGradient(
-          cx - r * 0.25, cy - r * 0.25, r * 0.05,
-          cx, cy, r
-        );
-        baseGrad.addColorStop(0, '#FFF7D6');
-        baseGrad.addColorStop(0.35, '#F8CE73');
-        baseGrad.addColorStop(0.75, '#D98E2B');
-        baseGrad.addColorStop(0.95, '#B56718');
-        baseGrad.addColorStop(1, '#8F490E');
+        // Key bright ray-crater centers matching the uploaded moon photo (left & right bright impacts)
+        const rayCenters = [
+          { x: -0.44, y: 0.14, strength: 0.42 }, // Left bright Tycho-like burst
+          { x: 0.56, y: -0.05, strength: 0.36 }, // Right bright limb crater
+          { x: -0.14, y: -0.34, strength: 0.22 },
+          { x: 0.22, y: 0.42, strength: 0.25 }
+        ];
 
+        for (let py = 0; py < MOON_SIZE; py++) {
+          for (let px = 0; px < MOON_SIZE; px++) {
+            const dx = (px - cx) / r;
+            const dy = (py - cy) / r;
+            const distSq = dx * dx + dy * dy;
+            const idx = (py * MOON_SIZE + px) * 4;
+
+            if (distSq > 1.0) {
+              data[idx + 3] = 0;
+              continue;
+            }
+
+            // Spherical 3D normal mapping for realistic lunar curvature
+            const dz = Math.sqrt(Math.max(0, 1 - distSq));
+            const sx = dx / (dz + 0.35);
+            const sy = dy / (dz + 0.35);
+
+            // Multi-scale lunar maria & highlands noise
+            const macro = fbm(sx * 2.4 + 4.2, sy * 2.4 + 1.7, 5);
+            const micro = fbm(sx * 14.0 + 11.3, sy * 14.0 + 8.9, 4);
+            const fine = valueNoise(px * 0.25, py * 0.25);
+
+            // Dark lunar seas (Maria) concentrated in upper-left, center-top, and right-center
+            const mariaMask =
+              Math.exp(-((dx + 0.26) ** 2 / 0.18 + (dy + 0.16) ** 2 / 0.14)) * 0.42 +
+              Math.exp(-((dx - 0.18) ** 2 / 0.16 + (dy + 0.12) ** 2 / 0.22)) * 0.36 +
+              Math.exp(-((dx - 0.34) ** 2 / 0.12 + (dy - 0.16) ** 2 / 0.15)) * 0.38 +
+              Math.exp(-((dx + 0.08) ** 2 / 0.22 + (dy - 0.26) ** 2 / 0.12)) * 0.26;
+
+            let albedo = 0.68 + (macro - 0.5) * 0.52 + (micro - 0.5) * 0.22 + (fine - 0.5) * 0.06;
+            albedo -= mariaMask * (0.65 + macro * 0.4);
+
+            // Add radial ejecta streaks from major impact craters
+            for (let k = 0; k < rayCenters.length; k++) {
+              const rc = rayCenters[k];
+              const rdx = dx - rc.x;
+              const rdy = dy - rc.y;
+              const rDist = Math.hypot(rdx, rdy) + 0.001;
+              const angle = Math.atan2(rdy, rdx);
+              const streak = Math.pow(Math.abs(Math.sin(angle * 11 + rc.x * 9) * Math.cos(angle * 7 - rc.y * 6)), 3);
+              const falloff = Math.exp(-rDist * 4.8);
+              albedo += rc.strength * falloff * (0.45 + 0.75 * streak);
+            }
+
+            // Limb brightening & golden atmospheric scattering at edge
+            const limb = Math.pow(1 - dz, 2.2) * 0.28;
+            albedo = Math.max(0.14, Math.min(1.18, albedo + limb));
+
+            // Map lunar albedo to rich photographic warm gold / amber palette
+            const R = Math.min(255, Math.floor(175 + albedo * 86));
+            const G = Math.min(255, Math.floor(102 + Math.pow(albedo, 1.12) * 134));
+            const B = Math.min(255, Math.floor(28 + Math.pow(albedo, 1.45) * 148));
+
+            // Soft anti-aliased edge
+            const edgeAlpha = distSq > 0.985 ? Math.max(0, (1.0 - distSq) / 0.015) : 1.0;
+
+            data[idx] = R;
+            data[idx + 1] = G;
+            data[idx + 2] = B;
+            data[idx + 3] = Math.floor(edgeAlpha * 255);
+          }
+        }
+
+        moonCtx.putImageData(imgData, 0, 0);
+
+        // Overlay crisp 3D-shaded impact craters with sunlit rims & dark floors
         moonCtx.save();
         moonCtx.beginPath();
-        moonCtx.arc(cx, cy, r, 0, Math.PI * 2);
-        moonCtx.fillStyle = baseGrad;
-        moonCtx.fill();
+        moonCtx.arc(cx, cy, r * 0.995, 0, Math.PI * 2);
         moonCtx.clip();
 
-        // Lunar Maria (dark dramatic patches matching the reference moon)
-        const maria = [
-          { x: -0.28, y: -0.18, rx: 0.34, ry: 0.26, rot: -0.3, alpha: 0.24 },
-          { x: -0.05, y: -0.32, rx: 0.25, ry: 0.18, rot: 0.2, alpha: 0.20 },
-          { x: 0.22, y: -0.12, rx: 0.28, ry: 0.32, rot: 0.4, alpha: 0.22 },
-          { x: 0.32, y: 0.16, rx: 0.22, ry: 0.25, rot: -0.2, alpha: 0.26 },
-          { x: -0.18, y: 0.22, rx: 0.30, ry: 0.20, rot: 0.15, alpha: 0.18 },
-          { x: 0.05, y: 0.05, rx: 0.18, ry: 0.15, rot: 0.5, alpha: 0.16 }
+        const craterList = [
+          { x: -0.44, y: 0.14, rad: 0.036, glow: true },
+          { x: 0.56, y: -0.05, rad: 0.068, glow: true },
+          { x: 0.64, y: 0.12, rad: 0.048, glow: false },
+          { x: 0.42, y: 0.26, rad: 0.042, glow: false },
+          { x: -0.22, y: -0.28, rad: 0.038, glow: false },
+          { x: -0.06, y: -0.14, rad: 0.032, glow: false },
+          { x: 0.16, y: -0.34, rad: 0.044, glow: false },
+          { x: -0.32, y: 0.34, rad: 0.035, glow: false },
+          { x: 0.18, y: 0.44, rad: 0.040, glow: true },
+          { x: -0.55, y: -0.12, rad: 0.033, glow: false },
+          { x: 0.04, y: 0.18, rad: 0.028, glow: false },
+          { x: -0.15, y: 0.04, rad: 0.025, glow: false },
+          { x: 0.31, y: -0.22, rad: 0.030, glow: false }
         ];
 
-        maria.forEach(m => {
-          moonCtx.save();
-          moonCtx.translate(cx + m.x * r, cy + m.y * r);
-          moonCtx.rotate(m.rot);
-          const g = moonCtx.createRadialGradient(0, 0, 2, 0, 0, m.rx * r);
-          g.addColorStop(0, `rgba(92, 46, 10, ${m.alpha})`);
-          g.addColorStop(0.65, `rgba(120, 62, 16, ${m.alpha * 0.65})`);
-          g.addColorStop(1, 'rgba(120, 62, 16, 0)');
-          moonCtx.fillStyle = g;
-          moonCtx.beginPath();
-          moonCtx.ellipse(0, 0, m.rx * r, m.ry * r, 0, 0, Math.PI * 2);
-          moonCtx.fill();
-          moonCtx.restore();
-        });
-
-        // Detailed Craters & Ray ejecta (like Tycho & Copernicus in the uploaded artwork)
-        const craters = [
-          { x: -0.34, y: 0.08, cr: 0.055, bright: true },
-          { x: 0.38, y: -0.04, cr: 0.07, bright: true },
-          { x: -0.12, y: -0.08, cr: 0.045, bright: false },
-          { x: 0.15, y: 0.32, cr: 0.05, bright: true },
-          { x: -0.22, y: -0.36, cr: 0.04, bright: false },
-          { x: 0.26, y: -0.32, cr: 0.045, bright: false },
-          { x: 0.02, y: 0.24, cr: 0.035, bright: false },
-          { x: -0.42, y: -0.12, cr: 0.038, bright: false },
-          { x: 0.44, y: 0.12, cr: 0.042, bright: false }
-        ];
-
-        craters.forEach(c => {
+        craterList.forEach(c => {
           const px = cx + c.x * r;
           const py = cy + c.y * r;
-          const rad = c.cr * r;
+          const cr = c.rad * r;
 
-          if (c.bright) {
-            // Luminous ray burst
-            const rayGrad = moonCtx.createRadialGradient(px, py, rad * 0.2, px, py, rad * 3.2);
-            rayGrad.addColorStop(0, 'rgba(255, 250, 224, 0.55)');
-            rayGrad.addColorStop(0.4, 'rgba(255, 232, 165, 0.18)');
-            rayGrad.addColorStop(1, 'rgba(255, 232, 165, 0)');
-            moonCtx.fillStyle = rayGrad;
+          if (c.glow) {
+            const g = moonCtx.createRadialGradient(px, py, cr * 0.1, px, py, cr * 2.6);
+            g.addColorStop(0, 'rgba(255, 250, 226, 0.65)');
+            g.addColorStop(0.5, 'rgba(255, 232, 168, 0.2)');
+            g.addColorStop(1, 'rgba(255, 232, 168, 0)');
+            moonCtx.fillStyle = g;
             moonCtx.beginPath();
-            moonCtx.arc(px, py, rad * 3.2, 0, Math.PI * 2);
+            moonCtx.arc(px, py, cr * 2.6, 0, Math.PI * 2);
             moonCtx.fill();
           }
 
-          // Crater rim & shadow
+          // Shadowed crater interior
+          const floorGrad = moonCtx.createRadialGradient(px - cr * 0.2, py - cr * 0.2, cr * 0.1, px, py, cr);
+          floorGrad.addColorStop(0, 'rgba(98, 52, 14, 0.42)');
+          floorGrad.addColorStop(0.75, 'rgba(135, 76, 22, 0.26)');
+          floorGrad.addColorStop(1, 'rgba(255, 242, 195, 0.45)');
+          moonCtx.fillStyle = floorGrad;
           moonCtx.beginPath();
-          moonCtx.arc(px, py, rad, 0, Math.PI * 2);
-          moonCtx.fillStyle = 'rgba(110, 56, 12, 0.28)';
+          moonCtx.arc(px, py, cr, 0, Math.PI * 2);
           moonCtx.fill();
 
+          // Bright sunlit rim
+          moonCtx.strokeStyle = 'rgba(255, 246, 208, 0.42)';
+          moonCtx.lineWidth = 2;
           moonCtx.beginPath();
-          moonCtx.arc(px + rad * 0.15, py + rad * 0.15, rad * 0.85, 0, Math.PI * 2);
-          moonCtx.strokeStyle = 'rgba(255, 244, 198, 0.35)';
-          moonCtx.lineWidth = 1.5;
+          moonCtx.arc(px + cr * 0.08, py + cr * 0.08, cr * 0.94, 0, Math.PI * 2);
           moonCtx.stroke();
         });
 
-        // Subtle inner rim glow
-        const rimGrad = moonCtx.createRadialGradient(cx, cy, r * 0.84, cx, cy, r);
-        rimGrad.addColorStop(0, 'rgba(255, 244, 200, 0)');
-        rimGrad.addColorStop(0.85, 'rgba(255, 236, 175, 0.25)');
-        rimGrad.addColorStop(1, 'rgba(255, 248, 220, 0.65)');
-        moonCtx.fillStyle = rimGrad;
-        moonCtx.beginPath();
-        moonCtx.arc(cx, cy, r, 0, Math.PI * 2);
-        moonCtx.fill();
-
         moonCtx.restore();
       }
-      buildMoonTexture();
+      buildPhotorealisticMoon();
 
-      // Stars & Drifting Cloud Puffs
-      let stars = [];
-      let clouds = [];
-      let mistParticles = [];
+      // =========================================================================
+      // B. VOLUMETRIC CLOUD BANK GENERATOR (Pre-rendered organic FBM cumulus)
+      // =========================================================================
+      function createVolumetricCloudSprite(w, h, lightDirX, warmth) {
+        const c = document.createElement('canvas');
+        c.width = w;
+        c.height = h;
+        const cctx = c.getContext('2d');
+        const img = cctx.createImageData(w, h);
+        const d = img.data;
 
-      function initParticles() {
-        stars = Array.from({ length: 130 }, () => ({
-          x: Math.random(),
-          y: Math.random() * 0.72,
-          size: Math.random() * 1.6 + 0.4,
-          phase: Math.random() * Math.PI * 2,
-          speed: 0.5 + Math.random() * 1.5
-        }));
+        const seedX = Math.random() * 50;
+        const seedY = Math.random() * 50;
 
-        // Dramatic cumulus clouds flanking the moon (left & right lower banks like the image)
-        clouds = [
-          // Left illuminated cumulus bank
-          { x: 0.12, y: 0.56, r: 0.17, speed: 0.0045, layer: 'back', warm: 0.9 },
-          { x: 0.23, y: 0.60, r: 0.19, speed: 0.0055, layer: 'back', warm: 1.0 },
-          { x: 0.04, y: 0.64, r: 0.21, speed: 0.0038, layer: 'front', warm: 0.75 },
-          { x: 0.29, y: 0.67, r: 0.16, speed: 0.0062, layer: 'front', warm: 0.95 },
-          // Right illuminated cumulus bank
-          { x: 0.84, y: 0.54, r: 0.18, speed: -0.0042, layer: 'back', warm: 0.95 },
-          { x: 0.94, y: 0.61, r: 0.22, speed: -0.005, layer: 'back', warm: 0.85 },
-          { x: 0.76, y: 0.65, r: 0.16, speed: -0.0058, layer: 'front', warm: 1.0 },
-          { x: 0.90, y: 0.69, r: 0.20, speed: -0.0035, layer: 'front', warm: 0.7 },
-          // Upper wispy dark-gold clouds
-          { x: 0.18, y: 0.22, r: 0.16, speed: 0.003, layer: 'back', warm: 0.45 },
-          { x: 0.86, y: 0.19, r: 0.18, speed: -0.0032, layer: 'back', warm: 0.5 }
+        for (let y = 0; y < h; y++) {
+          const ny = (y / h - 0.5) * 2;
+          for (let x = 0; x < w; x++) {
+            const nx = (x / w - 0.5) * 2;
+            const idx = (y * w + x) * 4;
+
+            // Elliptical envelope distorted by multi-octave FBM turbulence
+            const turb = fbm((x / w) * 4.5 + seedX, (y / h) * 4.5 + seedY, 5);
+            const detail = fbm((x / w) * 12.0 + seedX, (y / h) * 12.0 + seedY, 3);
+            const dist = Math.hypot(nx * 0.95, ny * 1.15) - (turb - 0.46) * 0.85 - (detail - 0.5) * 0.22;
+
+            if (dist > 0.72) {
+              d[idx + 3] = 0;
+              continue;
+            }
+
+            const density = Math.max(0, Math.min(1, (0.72 - dist) / 0.55));
+            const alpha = Math.pow(density, 1.35) * 0.94;
+
+            // Silver-lining & golden rim-light facing the Moon
+            const edgeFactor = Math.pow(1 - density, 1.6);
+            const directionalLight = Math.max(0, (nx * lightDirX + (-ny) * 0.45 + 0.65) * 0.75);
+            const rimGlow = Math.min(1, (edgeFactor * 0.85 + directionalLight * 0.55) * warmth * (0.65 + detail * 0.7));
+
+            // Deep stormy slate-charcoal core -> warm golden-ivory rim
+            const rCol = Math.min(255, Math.floor(18 + rimGlow * 242));
+            const gCol = Math.min(255, Math.floor(24 + Math.pow(rimGlow, 1.15) * 204));
+            const bCol = Math.min(255, Math.floor(38 + Math.pow(rimGlow, 1.45) * 145));
+
+            d[idx] = rCol;
+            d[idx + 1] = gCol;
+            d[idx + 2] = bCol;
+            d[idx + 3] = Math.floor(alpha * 255);
+          }
+        }
+        cctx.putImageData(img, 0, 0);
+        return c;
+      }
+
+      // Generate rich cloud sprites flanking left & right of the moon just like the photo
+      const cloudSprites = {
+        leftTower: createVolumetricCloudSprite(520, 420, 0.85, 1.15),
+        leftLow: createVolumetricCloudSprite(480, 320, 0.75, 0.95),
+        rightTower: createVolumetricCloudSprite(540, 440, -0.85, 1.18),
+        rightLow: createVolumetricCloudSprite(500, 340, -0.75, 0.95),
+        upperWispL: createVolumetricCloudSprite(440, 220, 0.6, 0.65),
+        upperWispR: createVolumetricCloudSprite(460, 240, -0.6, 0.7)
+      };
+
+      // =========================================================================
+      // C. PHOTOREALISTIC 3/4 FRONT-BOW TALL SAILING GALLEON / FRIGATE
+      //    Matches the exact silhouette, 3/4 bow perspective, gold filigree bow
+      //    carvings, timber planks, dense rigging, and billowing square sails
+      // =========================================================================
+      function drawPhotorealisticGalleon(shipX, waterlineY, scale, time) {
+        // Natural ocean swell heave, roll, and pitch
+        const pitch = Math.sin(time * 1.05) * 0.018;
+        const roll = Math.cos(time * 0.85) * 0.014;
+        const heave = Math.sin(time * 1.4 + 0.5) * 5.0 * scale;
+        const windGust = Math.sin(time * 1.9) * 5.5 + Math.cos(time * 1.15) * 3.0;
+
+        ctx.save();
+        ctx.translate(shipX, waterlineY + heave);
+        ctx.rotate(pitch + roll);
+        ctx.scale(scale, scale);
+
+        // Key mast coordinates in 3/4 front-bow perspective
+        // Foremast is prominent in front-left-center, Mainmast tallest behind it, Mizzenmast to the right
+        const mainMast = { x: -4, baseY: -36, topY: -328 };
+        const foreMast = { x: -46, baseY: -30, topY: -268 };
+        const mizzenMast = { x: 46, baseY: -38, topY: -242 };
+        const bowspritTip = { x: -162, y: -88 };
+        const bowspritBase = { x: -64, y: -32 };
+
+        // -----------------------------------------------------------------------
+        // 1. INTRICATE RIGGING, STAYS, SHROUDS & RATLINES (Silhouetted on Moon)
+        // -----------------------------------------------------------------------
+        ctx.save();
+        ctx.strokeStyle = 'rgba(10, 14, 24, 0.88)';
+        ctx.lineCap = 'round';
+
+        // Standing forestays & topmast stays
+        const standingRigging = [
+          [bowspritTip.x, bowspritTip.y, foreMast.x, -252],
+          [bowspritTip.x, bowspritTip.y, mainMast.x, -315],
+          [-132, -72, foreMast.x, -196],
+          [-104, -56, foreMast.x, -138],
+          [foreMast.x, -256, mainMast.x, -318],
+          [foreMast.x, -196, mainMast.x, -252],
+          [foreMast.x, -138, mainMast.x, -184],
+          [mainMast.x, -318, mizzenMast.x, -230],
+          [mainMast.x, -252, mizzenMast.x, -175],
+          [mizzenMast.x, -230, 114, -58],
+          [mainMast.x, -318, 112, -56],
+          // Martingale / dolphin striker stays under bowsprit
+          [bowspritTip.x, bowspritTip.y, -108, -28],
+          [-108, -28, -74, -12]
         ];
 
-        mistParticles = Array.from({ length: 28 }, () => ({
+        ctx.lineWidth = 1.15;
+        standingRigging.forEach(([x1, y1, x2, y2]) => {
+          ctx.beginPath();
+          ctx.moveTo(x1, y1);
+          ctx.quadraticCurveTo((x1 + x2) * 0.5, (y1 + y2) * 0.5 + 5, x2, y2);
+          ctx.stroke();
+        });
+
+        // Detailed Shroud Ladders & Ratlines
+        function renderShroudBank(topX, topY, leftX, rightX, botY, count) {
+          ctx.strokeStyle = 'rgba(9, 13, 22, 0.9)';
+          ctx.lineWidth = 1.1;
+          for (let i = 0; i <= count; i++) {
+            const bx = leftX + ((rightX - leftX) * i) / count;
+            ctx.beginPath();
+            ctx.moveTo(topX, topY);
+            ctx.lineTo(bx, botY);
+            ctx.stroke();
+          }
+          // Horizontal ratline steps
+          ctx.lineWidth = 0.6;
+          for (let t = 0.12; t <= 0.96; t += 0.065) {
+            const lx = topX + (leftX - topX) * t;
+            const rx = topX + (rightX - topX) * t;
+            const ry = topY + (botY - topY) * t;
+            ctx.beginPath();
+            ctx.moveTo(lx, ry);
+            ctx.lineTo(rx, ry);
+            ctx.stroke();
+          }
+        }
+
+        renderShroudBank(foreMast.x, -194, -68, -24, -34, 6);
+        renderShroudBank(foreMast.x, -250, -58, -34, -196, 4);
+        renderShroudBank(mainMast.x, -248, -28, 22, -38, 7);
+        renderShroudBank(mainMast.x, -310, -16, 10, -250, 4);
+        renderShroudBank(mizzenMast.x, -172, 28, 66, -42, 5);
+
+        ctx.restore();
+
+        // -----------------------------------------------------------------------
+        // 2. HEAVY WOODEN MASTS, TOPS (CROW'S NESTS) & BOWSPRIT
+        // -----------------------------------------------------------------------
+        function drawSpar(x1, y1, x2, y2, w1, w2) {
+          const angle = Math.atan2(y2 - y1, x2 - x1);
+          const nx = -Math.sin(angle);
+          const ny = Math.cos(angle);
+          ctx.beginPath();
+          ctx.moveTo(x1 + nx * w1 * 0.5, y1 + ny * w1 * 0.5);
+          ctx.lineTo(x2 + nx * w2 * 0.5, y2 + ny * w2 * 0.5);
+          ctx.lineTo(x2 - nx * w2 * 0.5, y2 - ny * w2 * 0.5);
+          ctx.lineTo(x1 - nx * w1 * 0.5, y1 - ny * w1 * 0.5);
+          ctx.closePath();
+
+          const g = ctx.createLinearGradient(x1, y1, x2, y2);
+          g.addColorStop(0, '#0D121D');
+          g.addColorStop(0.5, '#191E29');
+          g.addColorStop(1, '#080B12');
+          ctx.fillStyle = g;
+          ctx.fill();
+        }
+
+        // Mainmast, Foremast, Mizzenmast, Bowsprit & Jibboom
+        drawSpar(mainMast.x, mainMast.baseY, mainMast.x, mainMast.topY, 7.5, 2.2);
+        drawSpar(foreMast.x, foreMast.baseY, foreMast.x, foreMast.topY, 6.5, 2.0);
+        drawSpar(mizzenMast.x, mizzenMast.baseY, mizzenMast.x, mizzenMast.topY, 5.2, 1.8);
+        drawSpar(bowspritBase.x, bowspritBase.y, bowspritTip.x, bowspritTip.y, 7.0, 2.4);
+
+        // Fighting Tops / Crow's Nests
+        [
+          { x: mainMast.x, y: -248, w: 24 },
+          { x: mainMast.x, y: -310, w: 15 },
+          { x: foreMast.x, y: -194, w: 20 },
+          { x: mizzenMast.x, y: -172, w: 16 }
+        ].forEach(nest => {
+          ctx.fillStyle = '#090D16';
+          ctx.fillRect(nest.x - nest.w / 2, nest.y - 3, nest.w, 5);
+          ctx.strokeStyle = 'rgba(246, 200, 110, 0.35)';
+          ctx.lineWidth = 0.8;
+          ctx.strokeRect(nest.x - nest.w / 2, nest.y - 3, nest.w, 5);
+        });
+
+        // -----------------------------------------------------------------------
+        // 3. WEATHERED DARK-CANVAS BILLOWING SAILS WITH GOLDEN RIM-LIGHTING
+        // -----------------------------------------------------------------------
+        function drawPhotorealisticSail(cx, topY, botY, topW, botW, billow, tiltX = 0) {
+          const curve = billow * 0.55;
+          const tlx = cx - topW * 0.5 + tiltX;
+          const trx = cx + topW * 0.5 + tiltX;
+          const blx = cx - botW * 0.5;
+          const brx = cx + botW * 0.5;
+          const midY = (topY + botY) * 0.5;
+
+          ctx.save();
+          ctx.beginPath();
+          ctx.moveTo(tlx, topY);
+          ctx.quadraticCurveTo(cx + tiltX, topY + 5, trx, topY);
+          // Right leech curve billowing forward-left
+          ctx.quadraticCurveTo(brx - curve * 0.75, midY, brx, botY);
+          // Arching foot of sail (buntline curve)
+          ctx.quadraticCurveTo(cx - curve * 0.35, botY - 13, blx, botY);
+          // Left leech curve
+          ctx.quadraticCurveTo(blx - curve * 1.15, midY, tlx, topY);
+          ctx.closePath();
+
+          // Realistic dark woven canvas shading with warm moonlight grazing the upper-right folds
+          const sailGrad = ctx.createLinearGradient(blx - curve, topY, trx, botY);
+          sailGrad.addColorStop(0, '#273449'); // Sunlit/moonlit windward edge
+          sailGrad.addColorStop(0.22, '#162030');
+          sailGrad.addColorStop(0.58, '#0D131F');
+          sailGrad.addColorStop(0.88, '#080C15');
+          sailGrad.addColorStop(1, '#1E1B18'); // Warm golden edge bounce
+          ctx.fillStyle = sailGrad;
+          ctx.fill();
+
+          // Vertical canvas cloth panels & horizontal reef bands
+          ctx.save();
+          ctx.clip();
+          const panels = 6;
+          for (let p = 1; p < panels; p++) {
+            const ratio = p / panels;
+            const pxTop = tlx + (trx - tlx) * ratio;
+            const pxBot = blx + (brx - blx) * ratio;
+            ctx.strokeStyle = p % 2 === 0 ? 'rgba(255, 241, 193, 0.06)' : 'rgba(4, 6, 12, 0.35)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(pxTop, topY);
+            ctx.quadraticCurveTo(pxBot - curve * 0.95, midY, pxBot, botY);
+            ctx.stroke();
+          }
+
+          // Horizontal reef-point bands
+          [0.32, 0.66].forEach(ryRatio => {
+            const ry = topY + (botY - topY) * ryRatio;
+            ctx.strokeStyle = 'rgba(246, 200, 110, 0.08)';
+            ctx.lineWidth = 1.2;
+            ctx.beginPath();
+            ctx.moveTo(blx - curve, ry);
+            ctx.quadraticCurveTo(cx - curve * 0.6, ry + 5, brx, ry);
+            ctx.stroke();
+          });
+          ctx.restore();
+
+          // Crisp golden rim highlight along sail border where moonlight hits
+          ctx.strokeStyle = 'rgba(246, 200, 110, 0.42)';
+          ctx.lineWidth = 1.15;
+          ctx.stroke();
+
+          // Yardarm wooden spar across top of sail
+          drawSpar(tlx - 6, topY, trx + 6, topY, 3.2, 3.2);
+
+          ctx.restore();
+        }
+
+        // Triangular Headsails (Flying Jib, Outer Jib, Fore Topmast Staysail)
+        function drawTriangularJib(x1, y1, x2, y2, x3, y3, billow) {
+          ctx.save();
+          ctx.beginPath();
+          ctx.moveTo(x1, y1);
+          ctx.quadraticCurveTo((x1 + x2) * 0.5 - billow * 0.55, (y1 + y2) * 0.5, x2, y2);
+          ctx.quadraticCurveTo((x2 + x3) * 0.5 - billow * 0.35, (y2 + y3) * 0.5 + 8, x3, y3);
+          ctx.quadraticCurveTo((x3 + x1) * 0.5 - billow * 0.2, (y3 + y1) * 0.5 + 4, x1, y1);
+          ctx.closePath();
+
+          const g = ctx.createLinearGradient(x1, y1, x3, y3);
+          g.addColorStop(0, '#2B394F');
+          g.addColorStop(0.5, '#131B29');
+          g.addColorStop(1, '#090E18');
+          ctx.fillStyle = g;
+          ctx.fill();
+
+          ctx.strokeStyle = 'rgba(246, 200, 110, 0.44)';
+          ctx.lineWidth = 1.1;
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        // Render Jibs on Bowsprit
+        drawTriangularJib(bowspritTip.x + 4, bowspritTip.y, foreMast.x - 2, -244, -84, -64, windGust * 1.1);
+        drawTriangularJib(-128, -68, foreMast.x - 2, -190, -72, -52, windGust * 0.95);
+        drawTriangularJib(-96, -52, foreMast.x - 2, -136, -64, -42, windGust * 0.8);
+
+        // Mizzenmast Sails (Right-rear)
+        drawPhotorealisticSail(mizzenMast.x, -226, -176, 44, 54, windGust * 0.85, -3);
+        drawPhotorealisticSail(mizzenMast.x, -168, -104, 62, 76, windGust * 0.95, -4);
+
+        // Mainmast Sails (Center Grand Sails)
+        drawPhotorealisticSail(mainMast.x, -304, -252, 54, 66, windGust * 0.9, -4);
+        drawPhotorealisticSail(mainMast.x, -244, -172, 82, 102, windGust * 1.1, -6);
+        drawPhotorealisticSail(mainMast.x, -164, -82, 108, 128, windGust * 1.2, -8);
+
+        // Foremast Sails (Front-Left Prominent Sails)
+        drawPhotorealisticSail(foreMast.x, -246, -198, 48, 58, windGust * 0.92, -5);
+        drawPhotorealisticSail(foreMast.x, -190, -124, 72, 88, windGust * 1.08, -7);
+        drawPhotorealisticSail(foreMast.x, -118, -56, 86, 102, windGust * 1.12, -8);
+
+        // Masthead Pennant & Cross-trees at Mainmast Peak
+        ctx.strokeStyle = '#090D16';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(mainMast.x - 12, mainMast.topY + 8);
+        ctx.lineTo(mainMast.x + 12, mainMast.topY + 8);
+        ctx.stroke();
+
+        // -----------------------------------------------------------------------
+        // 4. REALISTIC 3/4 FRONT-BOW OAK HULL WITH GOLD FILIGREE CARVINGS
+        //    Matches the dramatic curved prow, gold scrollwork, wooden planking,
+        //    gunports, and high carved stern gallery from the reference image
+        // -----------------------------------------------------------------------
+        ctx.save();
+
+        // Hull Main Silhouette (3/4 bow perspective: broad rounded bow on left, sweeping starboard side to stern on right)
+        ctx.beginPath();
+        ctx.moveTo(-88, -36); // Upper stem / knighthead
+        ctx.bezierCurveTo(-96, -18, -86, -4, -68, 5); // Full rounded bow entering water
+        ctx.lineTo(92, 5); // Waterline along starboard hull
+        ctx.quadraticCurveTo(108, -16, 118, -52); // High ornate stern transom
+        ctx.lineTo(84, -48); // Poop deck rail
+        ctx.lineTo(66, -38); // Quarterdeck step
+        ctx.lineTo(-42, -32); // Main waist bulwark
+        ctx.quadraticCurveTo(-68, -38, -88, -36); // Forecastle curve
+        ctx.closePath();
+
+        // Deep dark oak & midnight-blue hull shading
+        const hullGrad = ctx.createLinearGradient(-92, -20, 115, 0);
+        hullGrad.addColorStop(0, '#162033'); // Moonlit bow cheek
+        hullGrad.addColorStop(0.22, '#0A101D');
+        hullGrad.addColorStop(0.65, '#070B14');
+        hullGrad.addColorStop(1, '#181619'); // Warm lantern-lit stern
+        ctx.fillStyle = hullGrad;
+        ctx.fill();
+
+        // Clip inside hull to draw realistic horizontal oak planks & shadow strakes
+        ctx.save();
+        ctx.clip();
+        for (let p = -34; p <= 4; p += 3.6) {
+          ctx.strokeStyle = p % 7.2 === 0 ? 'rgba(255, 224, 155, 0.08)' : 'rgba(2, 4, 8, 0.55)';
+          ctx.lineWidth = 1.1;
+          ctx.beginPath();
+          ctx.moveTo(-98, p - 4);
+          ctx.quadraticCurveTo(-15, p + 3, 120, p - 14);
+          ctx.stroke();
+        }
+        ctx.restore();
+
+        // --- ORNATE GOLD-LEAF BOW BEAKHEAD, FIGUREHEAD & FILIGREE SCROLLWORK ---
+        // Sweeping Golden Wales (thick gold-trimmed hull bands)
+        const goldBands = [
+          { yStart: -33, yMid: -27, yEnd: -47, width: 2.2, color: '#F6C86E' },
+          { yStart: -24, yMid: -19, yEnd: -37, width: 1.8, color: '#E5A93C' },
+          { yStart: -14, yMid: -10, yEnd: -25, width: 1.5, color: '#C98426' }
+        ];
+
+        goldBands.forEach(band => {
+          ctx.strokeStyle = band.color;
+          ctx.lineWidth = band.width;
+          ctx.beginPath();
+          ctx.moveTo(-88, band.yStart);
+          ctx.quadraticCurveTo(-10, band.yMid, 116, band.yEnd);
+          ctx.stroke();
+        });
+
+        // Intricate Curved Beakhead & Golden Figurehead Assembly (the signature ornate bow in the photo!)
+        ctx.save();
+        // Dark timber beakhead rails
+        ctx.strokeStyle = '#080C14';
+        ctx.lineWidth = 4.5;
+        ctx.beginPath();
+        ctx.moveTo(-76, -12);
+        ctx.bezierCurveTo(-112, -18, -126, -42, -108, -54);
+        ctx.stroke();
+
+        // Overlapping Gold Filigree Scrolls & Carved Lion/Goddess Figurehead
+        ctx.strokeStyle = '#F6C86E';
+        ctx.lineWidth = 2.0;
+        ctx.beginPath();
+        ctx.moveTo(-76, -12);
+        ctx.bezierCurveTo(-112, -18, -126, -42, -108, -54);
+        ctx.stroke();
+
+        ctx.strokeStyle = '#E5A93C';
+        ctx.lineWidth = 1.4;
+        ctx.beginPath();
+        ctx.moveTo(-82, -22);
+        ctx.bezierCurveTo(-114, -26, -122, -46, -102, -56);
+        ctx.stroke();
+
+        // Decorative gold scrollwork loops on bow cheek
+        for (let s = 0; s < 5; s++) {
+          const sx = -84 + s * 11;
+          const sy = -28 + s * 1.2;
+          ctx.strokeStyle = 'rgba(246, 200, 110, 0.82)';
+          ctx.lineWidth = 1.2;
+          ctx.beginPath();
+          ctx.arc(sx, sy, 4.2, 0, Math.PI * 1.65);
+          ctx.stroke();
+        }
+
+        // Carved Gold Stern Gallery & Quarter-Badge Ornaments
+        ctx.strokeStyle = '#F6C86E';
+        ctx.lineWidth = 1.6;
+        ctx.strokeRect(86, -44, 24, 15);
+        for (let w = 0; w < 3; w++) {
+          ctx.fillStyle = 'rgba(255, 224, 140, 0.85)';
+          ctx.fillRect(89 + w * 7, -41, 4.5, 9);
+        }
+        ctx.restore();
+
+        // Warm Flickering Deck Lanterns & Gunport Glow along the Hull
+        const flicker = 0.82 + Math.sin(time * 7.2) * 0.12 + Math.cos(time * 11.5) * 0.06;
+        const hullLights = [
+          { x: 115, y: -55, r: 3.4 }, // Grand stern lantern
+          { x: 98, y: -36, r: 2.4 },
+          { x: 78, y: -32, r: 2.1 },
+          { x: 56, y: -27, r: 1.9 },
+          { x: 34, y: -24, r: 1.8 },
+          { x: 12, y: -23, r: 1.8 },
+          { x: -10, y: -23, r: 1.8 },
+          { x: -32, y: -24, r: 1.8 },
+          { x: -54, y: -25, r: 1.9 },
+          { x: -74, y: -27, r: 2.1 }
+        ];
+
+        hullLights.forEach(l => {
+          const glow = ctx.createRadialGradient(l.x, l.y, 0.4, l.x, l.y, l.r * 6);
+          glow.addColorStop(0, `rgba(255, 240, 185, ${0.95 * flicker})`);
+          glow.addColorStop(0.35, `rgba(235, 155, 42, ${0.48 * flicker})`);
+          glow.addColorStop(1, 'rgba(235, 155, 42, 0)');
+          ctx.fillStyle = glow;
+          ctx.beginPath();
+          ctx.arc(l.x, l.y, l.r * 6, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = '#FFF7D6';
+          ctx.beginPath();
+          ctx.arc(l.x, l.y, l.r * 0.65, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        ctx.restore();
+        ctx.restore();
+      }
+
+      // =========================================================================
+      // D. PHOTOREALISTIC REFLECTIVE OCEAN, GOLDEN MOON PATH & BOW WAKE
+      // =========================================================================
+      function drawPhotorealisticOcean(horizonY, moonX, shipX, shipScale, time) {
+        const seaHeight = height - horizonY;
+
+        // 1. Deep Midnight Ocean Gradient
+        const seaGrad = ctx.createLinearGradient(0, horizonY, 0, height);
+        seaGrad.addColorStop(0, '#0D1628');
+        seaGrad.addColorStop(0.16, '#080F1D');
+        seaGrad.addColorStop(0.55, '#040812');
+        seaGrad.addColorStop(1, '#020409');
+        ctx.fillStyle = seaGrad;
+        ctx.fillRect(0, horizonY, width, seaHeight);
+
+        // 2. Warm Golden Horizon Mist Reflection
+        const horizonGlow = ctx.createRadialGradient(
+          moonX, horizonY, 8,
+          moonX, horizonY, width * 0.48
+        );
+        horizonGlow.addColorStop(0, 'rgba(255, 224, 150, 0.36)');
+        horizonGlow.addColorStop(0.4, 'rgba(217, 138, 43, 0.14)');
+        horizonGlow.addColorStop(1, 'rgba(8, 15, 29, 0)');
+        ctx.fillStyle = horizonGlow;
+        ctx.fillRect(0, horizonY - 2, width, seaHeight * 0.6);
+
+        // 3. Perspective Rippling Wavelets & Specular Golden Moonlight Column
+        // Positioned slightly right of the ship's stern/midship just like in the reference photo!
+        const shimmerCenterX = moonX + 36 * shipScale;
+        const scanRows = 110;
+        for (let i = 0; i < scanRows; i++) {
+          const t = i / scanRows;
+          const persp = Math.pow(t, 1.48);
+          const y = horizonY + persp * seaHeight;
+          const waveH = Math.max(1.2, 1.0 + persp * 5.2);
+
+          // Multi-frequency wave displacement
+          const disp =
+            Math.sin(time * 2.3 + i * 0.55) * (6 + persp * 26) +
+            Math.cos(time * 1.6 - i * 0.32) * (4 + persp * 14);
+          const halfW = (24 + persp * 165) * (0.78 + Math.abs(Math.sin(time * 1.9 + i * 0.7)) * 0.34);
+          const sparkle = (1 - t * 0.62) * (0.24 + Math.pow(Math.abs(Math.sin(time * 2.5 + i * 1.15)), 2) * 0.52);
+
+          const rx = shimmerCenterX + disp;
+          const g = ctx.createLinearGradient(rx - halfW, y, rx + halfW, y);
+          g.addColorStop(0, 'rgba(246, 200, 110, 0)');
+          g.addColorStop(0.28, `rgba(218, 150, 48, ${sparkle * 0.65})`);
+          g.addColorStop(0.5, `rgba(255, 244, 204, ${sparkle})`);
+          g.addColorStop(0.72, `rgba(218, 150, 48, ${sparkle * 0.65})`);
+          g.addColorStop(1, 'rgba(246, 200, 110, 0)');
+
+          ctx.fillStyle = g;
+          ctx.fillRect(rx - halfW, y, halfW * 2, waveH);
+        }
+
+        // 4. Dark Hull Shadow Reflection & Warm Lantern Ripples Directly Beneath the Ship
+        const hullWaterY = horizonY + seaHeight * 0.21;
+        ctx.save();
+        for (let r = 0; r < 28; r++) {
+          const rt = r / 28;
+          const ry = hullWaterY + rt * 92 * shipScale;
+          const rw = (92 - rt * 26) * shipScale;
+          const rx = shipX + Math.sin(time * 3.1 + r * 0.75) * (3 + rt * 11);
+
+          // Dark hull shadow
+          ctx.fillStyle = `rgba(2, 4, 9, ${0.65 - rt * 0.48})`;
+          ctx.fillRect(rx - rw, ry, rw * 1.65, 2.8);
+
+          // Golden stern-light reflection streak on right side of hull reflection
+          ctx.fillStyle = `rgba(246, 195, 95, ${(0.38 - rt * 0.28) * (0.7 + Math.sin(time * 4 + r) * 0.3)})`;
+          ctx.fillRect(rx + rw * 0.25, ry, rw * 0.85, 2.2);
+        }
+        ctx.restore();
+
+        // 5. Layered Dark Ocean Swells with Subtle Moonlight Rim Highlights
+        const swells = [
+          { yRatio: 0.14, amp: 3.5, freq: 0.015, speed: 1.2, fill: 'rgba(12, 21, 40, 0.55)' },
+          { yRatio: 0.32, amp: 6.5, freq: 0.011, speed: 1.6, fill: 'rgba(8, 15, 30, 0.74)' },
+          { yRatio: 0.56, amp: 10.5, freq: 0.0085, speed: 2.0, fill: 'rgba(5, 10, 21, 0.88)' },
+          { yRatio: 0.82, amp: 14.5, freq: 0.006, speed: 2.5, fill: 'rgba(3, 6, 14, 0.96)' }
+        ];
+
+        swells.forEach((sw, idx) => {
+          const baseY = horizonY + seaHeight * sw.yRatio;
+          ctx.beginPath();
+          ctx.moveTo(0, height);
+          for (let x = 0; x <= width + 24; x += 20) {
+            const wy =
+              baseY +
+              Math.sin(x * sw.freq + time * sw.speed + idx * 1.4) * sw.amp +
+              Math.cos(x * sw.freq * 1.9 - time * sw.speed * 0.75) * (sw.amp * 0.42);
+            ctx.lineTo(x, wy);
+          }
+          ctx.lineTo(width, height);
+          ctx.closePath();
+          ctx.fillStyle = sw.fill;
+          ctx.fill();
+
+          ctx.strokeStyle = 'rgba(246, 200, 110, 0.08)';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        });
+
+        // 6. Churning White & Gold-Lit Bow Wave and Stern Wake Foam (Matching the photo's white water trails!)
+        ctx.save();
+        for (let w = 0; w < 22; w++) {
+          const prog = (time * 0.42 + w / 22) % 1;
+          // Starboard wake trailing behind the stern
+          const wakeX = shipX - 45 * shipScale + prog * 265 * shipScale;
+          const wakeY = hullWaterY + Math.sin(time * 3.4 + w * 0.9) * 2.8 + prog * 14 * shipScale;
+          const wakeW = (22 + prog * 64) * shipScale;
+          const alpha = Math.sin(prog * Math.PI) * 0.52;
+
+          const fGrad = ctx.createLinearGradient(wakeX - wakeW, wakeY, wakeX + wakeW, wakeY);
+          fGrad.addColorStop(0, 'rgba(255, 246, 220, 0)');
+          fGrad.addColorStop(0.45, `rgba(255, 244, 214, ${alpha})`);
+          fGrad.addColorStop(1, 'rgba(255, 246, 220, 0)');
+          ctx.fillStyle = fGrad;
+          ctx.fillRect(wakeX - wakeW, wakeY, wakeW * 2, 2.6);
+        }
+
+        // Left-side bow splash foam where the prow cuts the dark water
+        for (let b = 0; b < 10; b++) {
+          const bProg = (time * 0.55 + b / 10) % 1;
+          const bx = shipX - 75 * shipScale - bProg * 145 * shipScale;
+          const by = hullWaterY + 3 + Math.cos(time * 3.8 + b) * 2.5 + bProg * 9;
+          const bw = (16 + bProg * 42) * shipScale;
+          const bAlpha = Math.sin(bProg * Math.PI) * 0.36;
+          const bGrad = ctx.createLinearGradient(bx - bw, by, bx + bw, by);
+          bGrad.addColorStop(0, 'rgba(220, 232, 248, 0)');
+          bGrad.addColorStop(0.5, `rgba(235, 240, 248, ${bAlpha})`);
+          bGrad.addColorStop(1, 'rgba(220, 232, 248, 0)');
+          ctx.fillStyle = bGrad;
+          ctx.fillRect(bx - bw, by, bw * 2, 2.2);
+        }
+        ctx.restore();
+      }
+
+      // =========================================================================
+      // E. RESIZE & MAIN 60FPS CINEMATIC RENDER LOOP
+      // =========================================================================
+      let stars = [];
+      function initStars() {
+        stars = Array.from({ length: 140 }, () => ({
           x: Math.random(),
-          y: 0.73 + Math.random() * 0.14,
-          w: 0.14 + Math.random() * 0.22,
-          h: 0.018 + Math.random() * 0.025,
-          speed: (Math.random() * 0.012 + 0.004) * (Math.random() > 0.5 ? 1 : -1),
-          alpha: 0.05 + Math.random() * 0.09
+          y: Math.random() * 0.72,
+          size: Math.random() * 1.5 + 0.35,
+          phase: Math.random() * Math.PI * 2,
+          speed: 0.4 + Math.random() * 1.4
         }));
       }
 
@@ -683,517 +1321,85 @@
 
       window.addEventListener('resize', resize);
       resize();
-      initParticles();
+      initStars();
 
-      // Helper: Draw a volumetric sunlit cumulus cloud puff
-      function drawCloudPuff(cx, cy, radius, warmIntensity, moonX, moonY) {
-        // Direction toward the moon for golden rim light
-        const dx = moonX - cx;
-        const dy = moonY - cy;
-        const dist = Math.hypot(dx, dy) || 1;
-        const nx = dx / dist;
-        const ny = dy / dist;
-
-        const subPuffs = [
-          { ox: 0, oy: 0, sr: 1.0 },
-          { ox: -0.55, oy: 0.18, sr: 0.72 },
-          { ox: 0.58, oy: 0.15, sr: 0.76 },
-          { ox: -0.25, oy: -0.35, sr: 0.68 },
-          { ox: 0.28, oy: -0.30, sr: 0.65 }
-        ];
-
-        subPuffs.forEach(p => {
-          const px = cx + p.ox * radius;
-          const py = cy + p.oy * radius;
-          const pr = radius * p.sr;
-
-          const grad = ctx.createRadialGradient(
-            px + nx * pr * 0.42,
-            py + ny * pr * 0.42,
-            pr * 0.08,
-            px,
-            py,
-            pr
-          );
-
-          const goldAlpha = Math.min(0.85, 0.55 * warmIntensity);
-          grad.addColorStop(0, `rgba(255, 232, 175, ${goldAlpha})`);
-          grad.addColorStop(0.32, `rgba(218, 152, 68, ${goldAlpha * 0.72})`);
-          grad.addColorStop(0.68, 'rgba(34, 42, 62, 0.78)');
-          grad.addColorStop(1, 'rgba(10, 14, 26, 0)');
-
-          ctx.fillStyle = grad;
-          ctx.beginPath();
-          ctx.arc(px, py, pr, 0, Math.PI * 2);
-          ctx.fill();
-        });
-      }
-
-      /**
-       * Draw the Majestic 3-Masted Tall Sailing Ship (Galleon / Frigate)
-       * Positioned slightly right-of-center on desktop so left side holds hero text cleanly,
-       * and centered on mobile, framed directly in front of the golden full moon!
-       */
-      function drawSailingShip(shipX, waterlineY, scale, time) {
-        const pitchAngle = Math.sin(time * 1.15) * 0.022;
-        const heaveY = Math.sin(time * 1.55 + 0.6) * 4.5 * scale;
-        const windBillow = Math.sin(time * 2.1) * 4.5 + Math.cos(time * 1.3) * 2.5;
-
-        ctx.save();
-        ctx.translate(shipX, waterlineY + heaveY);
-        ctx.rotate(pitchAngle);
-        ctx.scale(scale, scale);
-
-        // --- 1. RIGGING & SHROUDS (Fine dark web lines silhouetted against the moon) ---
-        ctx.strokeStyle = 'rgba(12, 16, 26, 0.85)';
-        ctx.lineWidth = 1.1;
-
-        const mainMastX = -8;
-        const foreMastX = -58;
-        const mizzenMastX = 52;
-
-        // Forestays & Backstays
-        const stays = [
-          [-168, -42, foreMastX, -210],
-          [-168, -42, mainMastX, -268],
-          [-125, -34, foreMastX, -155],
-          [foreMastX, -210, mainMastX, -268],
-          [foreMastX, -155, mainMastX, -205],
-          [mainMastX, -268, mizzenMastX, -195],
-          [mizzenMastX, -195, 118, -44],
-          [mainMastX, -268, 115, -42]
-        ];
-
-        stays.forEach(([x1, y1, x2, y2]) => {
-          ctx.beginPath();
-          ctx.moveTo(x1, y1);
-          ctx.quadraticCurveTo((x1 + x2) * 0.5, (y1 + y2) * 0.5 + 6, x2, y2);
-          ctx.stroke();
-        });
-
-        // Ratlines / Shroud ladders
-        function drawShrouds(topX, topY, baseLeft, baseRight, baseY) {
-          const strands = 5;
-          for (let i = 0; i <= strands; i++) {
-            const bx = baseLeft + ((baseRight - baseLeft) * i) / strands;
-            ctx.beginPath();
-            ctx.moveTo(topX, topY);
-            ctx.lineTo(bx, baseY);
-            ctx.stroke();
-          }
-          // Horizontal ratline rungs
-          ctx.lineWidth = 0.65;
-          for (let r = 0.15; r < 0.95; r += 0.08) {
-            const lx = topX + (baseLeft - topX) * r;
-            const rx = topX + (baseRight - topX) * r;
-            const ry = topY + (baseY - topY) * r;
-            ctx.beginPath();
-            ctx.moveTo(lx, ry);
-            ctx.lineTo(rx, ry);
-            ctx.stroke();
-          }
-          ctx.lineWidth = 1.1;
-        }
-
-        drawShrouds(foreMastX, -155, -78, -38, -28);
-        drawShrouds(mainMastX, -200, -34, 22, -28);
-        drawShrouds(mizzenMastX, -145, 34, 74, -32);
-
-        // --- 2. MASTS & YARDARMS ---
-        ctx.strokeStyle = '#0B0F1A';
-        ctx.lineCap = 'round';
-
-        // Mainmast (tallest, piercing top of moon)
-        ctx.lineWidth = 4.5;
-        ctx.beginPath();
-        ctx.moveTo(mainMastX, -18);
-        ctx.lineTo(mainMastX, -278);
-        ctx.stroke();
-
-        // Foremast
-        ctx.lineWidth = 3.8;
-        ctx.beginPath();
-        ctx.moveTo(foreMastX, -22);
-        ctx.lineTo(foreMastX, -218);
-        ctx.stroke();
-
-        // Mizzenmast
-        ctx.lineWidth = 3.2;
-        ctx.beginPath();
-        ctx.moveTo(mizzenMastX, -25);
-        ctx.lineTo(mizzenMastX, -202);
-        ctx.stroke();
-
-        // Bowsprit (long dramatic angled spar at front-left)
-        ctx.lineWidth = 4.2;
-        ctx.beginPath();
-        ctx.moveTo(-78, -22);
-        ctx.lineTo(-175, -52);
-        ctx.stroke();
-
-        // --- 3. BILLOWING DARK SILK/CANVAS SAILS WITH GOLDEN RIM HIGHLIGHT ---
-        function drawSquareSail(cx, topY, bottomY, topW, bottomW, billow) {
-          const curve = billow * 0.45;
-          ctx.save();
-          ctx.beginPath();
-          ctx.moveTo(cx - topW / 2, topY);
-          ctx.quadraticCurveTo(cx, topY + 4, cx + topW / 2, topY);
-          ctx.quadraticCurveTo(cx + bottomW / 2 + curve, (topY + bottomY) * 0.5, cx + bottomW / 2, bottomY);
-          ctx.quadraticCurveTo(cx, bottomY - 9, cx - bottomW / 2, bottomY);
-          ctx.quadraticCurveTo(cx - bottomW / 2 + curve * 0.85, (topY + bottomY) * 0.5, cx - topW / 2, topY);
-          ctx.closePath();
-
-          // Dark midnight-indigo fabric with subtle warm moonlight translucency
-          const sailGrad = ctx.createLinearGradient(cx - bottomW / 2, topY, cx + bottomW / 2, bottomY);
-          sailGrad.addColorStop(0, '#1A2436');
-          sailGrad.addColorStop(0.45, '#0D1320');
-          sailGrad.addColorStop(0.85, '#080C15');
-          sailGrad.addColorStop(1, '#1E1A18');
-          ctx.fillStyle = sailGrad;
-          ctx.fill();
-
-          // Subtle golden moonlight rim along sail edges
-          ctx.strokeStyle = 'rgba(246, 200, 110, 0.32)';
-          ctx.lineWidth = 1.1;
-          ctx.stroke();
-
-          // Vertical sail panel seams
-          ctx.strokeStyle = 'rgba(255, 241, 193, 0.08)';
-          ctx.lineWidth = 0.7;
-          [-0.25, 0, 0.25].forEach(ratio => {
-            ctx.beginPath();
-            ctx.moveTo(cx + topW * ratio, topY + 2);
-            ctx.quadraticCurveTo(
-              cx + bottomW * ratio + curve * 0.8,
-              (topY + bottomY) * 0.5,
-              cx + bottomW * ratio,
-              bottomY - 4
-            );
-            ctx.stroke();
-          });
-
-          // Wooden yardarm spar across top
-          ctx.strokeStyle = '#090D16';
-          ctx.lineWidth = 2.6;
-          ctx.beginPath();
-          ctx.moveTo(cx - topW * 0.56, topY);
-          ctx.lineTo(cx + topW * 0.56, topY);
-          ctx.stroke();
-
-          ctx.restore();
-        }
-
-        // Jib / Triangular Headsails on Bowsprit
-        function drawJibSail(x1, y1, x2, y2, x3, y3, billow) {
-          ctx.save();
-          ctx.beginPath();
-          ctx.moveTo(x1, y1);
-          ctx.quadraticCurveTo((x1 + x2) / 2 - billow * 0.35, (y1 + y2) / 2, x2, y2);
-          ctx.quadraticCurveTo((x2 + x3) / 2 + billow * 0.25, (y2 + y3) / 2 + 4, x3, y3);
-          ctx.closePath();
-
-          const g = ctx.createLinearGradient(x1, y1, x3, y3);
-          g.addColorStop(0, '#232F44');
-          g.addColorStop(1, '#0B101B');
-          ctx.fillStyle = g;
-          ctx.fill();
-          ctx.strokeStyle = 'rgba(246, 200, 110, 0.35)';
-          ctx.lineWidth = 1;
-          ctx.stroke();
-          ctx.restore();
-        }
-
-        // Headsails
-        drawJibSail(-165, -46, -64, -198, -82, -55, windBillow);
-        drawJibSail(-132, -38, -62, -148, -74, -44, windBillow * 0.85);
-
-        // Mizzenmast Sails (Rear)
-        drawSquareSail(mizzenMastX, -182, -134, 46, 56, windBillow * 0.85);
-        drawSquareSail(mizzenMastX, -126, -68, 60, 74, windBillow * 0.95);
-
-        // Mainmast Sails (Center Grand Sails)
-        drawSquareSail(mainMastX, -242, -192, 54, 66, windBillow * 0.9);
-        drawSquareSail(mainMastX, -184, -122, 74, 92, windBillow * 1.1);
-        drawSquareSail(mainMastX, -114, -48, 94, 112, windBillow * 1.15);
-
-        // Foremast Sails (Front-Left)
-        drawSquareSail(foreMastX, -195, -148, 48, 58, windBillow * 0.9);
-        drawSquareSail(foreMastX, -140, -76, 66, 80, windBillow * 1.05);
-
-        // Crow's nests & Pennant flag at top of mainmast
-        ctx.fillStyle = '#090C14';
-        ctx.fillRect(mainMastX - 9, -190, 18, 4);
-        ctx.fillRect(foreMastX - 7, -146, 14, 4);
-
-        // Fluttering golden-black pennant at mainmast peak
-        ctx.beginPath();
-        ctx.moveTo(mainMastX, -276);
-        ctx.quadraticCurveTo(
-          mainMastX + 16,
-          -279 + Math.sin(time * 5) * 3,
-          mainMastX + 30,
-          -273 + Math.cos(time * 5) * 4
-        );
-        ctx.lineTo(mainMastX, -271);
-        ctx.closePath();
-        ctx.fillStyle = '#E5A93C';
-        ctx.fill();
-
-        // --- 4. ORNATE DARK-WOOD & GOLD FILIGREE HULL ---
-        ctx.save();
-        ctx.beginPath();
-        // Dramatic sweeping galleon silhouette: high carved stern on right, curved prow on left
-        ctx.moveTo(-98, -24); // Prow tip
-        ctx.quadraticCurveTo(-84, -8, -74, 4); // Cutwater entering sea
-        ctx.lineTo(94, 4); // Keel at waterline
-        ctx.quadraticCurveTo(108, -14, 116, -42); // High stern transom
-        ctx.lineTo(74, -36); // Poop deck step
-        ctx.lineTo(54, -26); // Quarterdeck
-        ctx.lineTo(-56, -24); // Main waist
-        ctx.quadraticCurveTo(-78, -28, -98, -24); // Forecastle curve
-        ctx.closePath();
-
-        const hullGrad = ctx.createLinearGradient(-90, -35, 110, 5);
-        hullGrad.addColorStop(0, '#0C1220');
-        hullGrad.addColorStop(0.5, '#070A12');
-        hullGrad.addColorStop(1, '#121826');
-        ctx.fillStyle = hullGrad;
-        ctx.fill();
-
-        // Golden Filigree Trim & Ornate Scrollwork along the hull (matching the artwork!)
-        ctx.strokeStyle = '#E5A93C';
-        ctx.lineWidth = 1.6;
-        ctx.beginPath();
-        ctx.moveTo(-95, -21);
-        ctx.quadraticCurveTo(-15, -17, 113, -36);
-        ctx.stroke();
-
-        ctx.strokeStyle = 'rgba(246, 200, 110, 0.65)';
-        ctx.lineWidth = 1.1;
-        ctx.beginPath();
-        ctx.moveTo(-88, -13);
-        ctx.quadraticCurveTo(-10, -10, 108, -26);
-        ctx.stroke();
-
-        // Golden Figurehead & Bow Scrollwork
-        ctx.strokeStyle = '#F6C86E';
-        ctx.lineWidth = 1.8;
-        ctx.beginPath();
-        ctx.moveTo(-82, -16);
-        ctx.bezierCurveTo(-108, -20, -118, -32, -104, -36);
-        ctx.stroke();
-
-        // Warm Flickering Lanterns & Gunport Lights along the hull
-        const flicker = 0.78 + Math.sin(time * 7.5) * 0.14 + Math.cos(time * 11) * 0.08;
-        const lanternPositions = [
-          { x: 112, y: -44, r: 3.2 }, // Stern grand lantern
-          { x: 96, y: -30, r: 2.2 },
-          { x: 78, y: -27, r: 2.0 },
-          { x: 58, y: -22, r: 1.9 },
-          { x: 35, y: -19, r: 1.8 },
-          { x: 12, y: -18, r: 1.8 },
-          { x: -12, y: -18, r: 1.8 },
-          { x: -36, y: -19, r: 1.8 },
-          { x: -64, y: -21, r: 2.1 }
-        ];
-
-        lanternPositions.forEach(l => {
-          const glow = ctx.createRadialGradient(l.x, l.y, 0.5, l.x, l.y, l.r * 5.5);
-          glow.addColorStop(0, `rgba(255, 236, 170, ${0.95 * flicker})`);
-          glow.addColorStop(0.4, `rgba(235, 155, 45, ${0.45 * flicker})`);
-          glow.addColorStop(1, 'rgba(235, 155, 45, 0)');
-          ctx.fillStyle = glow;
-          ctx.beginPath();
-          ctx.arc(l.x, l.y, l.r * 5.5, 0, Math.PI * 2);
-          ctx.fill();
-
-          ctx.fillStyle = '#FFF5CC';
-          ctx.beginPath();
-          ctx.arc(l.x, l.y, l.r * 0.65, 0, Math.PI * 2);
-          ctx.fill();
-        });
-
-        ctx.restore();
-        ctx.restore();
-      }
-
-      /**
-       * Draw the Dark Reflective Ocean, Shimmering Golden Moonlight Path & Ship Wake
-       */
-      function drawOcean(horizonY, moonX, shipX, shipScale, time) {
-        const seaHeight = height - horizonY;
-
-        // 1. Deep Ocean Base Gradient
-        const seaGrad = ctx.createLinearGradient(0, horizonY, 0, height);
-        seaGrad.addColorStop(0, '#0B1324');
-        seaGrad.addColorStop(0.18, '#070D1A');
-        seaGrad.addColorStop(0.6, '#040811');
-        seaGrad.addColorStop(1, '#020409');
-        ctx.fillStyle = seaGrad;
-        ctx.fillRect(0, horizonY, width, seaHeight);
-
-        // 2. Horizon Golden Mist Glow beneath the Moon
-        const horizonGlow = ctx.createRadialGradient(
-          moonX, horizonY, 10,
-          moonX, horizonY, width * 0.45
-        );
-        horizonGlow.addColorStop(0, 'rgba(246, 200, 110, 0.34)');
-        horizonGlow.addColorStop(0.45, 'rgba(217, 138, 43, 0.12)');
-        horizonGlow.addColorStop(1, 'rgba(11, 19, 36, 0)');
-        ctx.fillStyle = horizonGlow;
-        ctx.fillRect(0, horizonY - 2, width, seaHeight * 0.55);
-
-        // 3. Shimmering Golden Moonlight Path on Rippling Water
-        const rows = 75;
-        for (let i = 0; i < rows; i++) {
-          const t = i / rows;
-          const easeT = Math.pow(t, 1.35);
-          const y = horizonY + easeT * seaHeight;
-          const spread = (28 + easeT * 170) * (0.85 + Math.sin(time * 1.8 + i * 0.45) * 0.15);
-          const waveOffset = Math.sin(time * 2.4 + i * 0.65) * (8 + easeT * 24);
-          const ribbonH = Math.max(1.2, 1.2 + easeT * 4.5);
-          const alpha = (1 - t * 0.72) * (0.22 + Math.abs(Math.sin(time * 2.1 + i * 0.9)) * 0.36);
-
-          const rx = moonX + waveOffset;
-          const grad = ctx.createLinearGradient(rx - spread, y, rx + spread, y);
-          grad.addColorStop(0, 'rgba(246, 200, 110, 0)');
-          grad.addColorStop(0.3, `rgba(229, 169, 60, ${alpha * 0.65})`);
-          grad.addColorStop(0.5, `rgba(255, 241, 193, ${alpha})`);
-          grad.addColorStop(0.7, `rgba(229, 169, 60, ${alpha * 0.65})`);
-          grad.addColorStop(1, 'rgba(246, 200, 110, 0)');
-
-          ctx.fillStyle = grad;
-          ctx.fillRect(rx - spread, y, spread * 2, ribbonH);
-        }
-
-        // 4. Dark Silhouette Reflection of the Ship Hull on the Water
-        const reflectionY = horizonY + seaHeight * 0.18;
-        ctx.save();
-        for (let r = 0; r < 22; r++) {
-          const rt = r / 22;
-          const ry = reflectionY + rt * 78 * shipScale;
-          const rw = (96 - rt * 32) * shipScale;
-          const rx = shipX + Math.sin(time * 3 + r * 0.8) * (4 + rt * 10);
-          ctx.fillStyle = `rgba(3, 5, 11, ${0.55 - rt * 0.42})`;
-          ctx.fillRect(rx - rw, ry, rw * 2, 2.5);
-        }
-        ctx.restore();
-
-        // 5. Rolling Foreground Ocean Swells
-        const waveLayers = [
-          { yRatio: 0.16, amp: 4, freq: 0.014, speed: 1.3, color: 'rgba(13, 23, 44, 0.55)' },
-          { yRatio: 0.36, amp: 7, freq: 0.011, speed: 1.7, color: 'rgba(9, 16, 32, 0.72)' },
-          { yRatio: 0.62, amp: 11, freq: 0.0085, speed: 2.1, color: 'rgba(6, 11, 22, 0.85)' },
-          { yRatio: 0.84, amp: 15, freq: 0.0065, speed: 2.6, color: 'rgba(4, 7, 15, 0.95)' }
-        ];
-
-        waveLayers.forEach((wl, idx) => {
-          const baseY = horizonY + seaHeight * wl.yRatio;
-          ctx.beginPath();
-          ctx.moveTo(0, height);
-          for (let x = 0; x <= width + 30; x += 25) {
-            const wy =
-              baseY +
-              Math.sin(x * wl.freq + time * wl.speed + idx) * wl.amp +
-              Math.cos(x * wl.freq * 1.8 - time * wl.speed * 0.7) * (wl.amp * 0.45);
-            ctx.lineTo(x, wy);
-          }
-          ctx.lineTo(width, height);
-          ctx.closePath();
-          ctx.fillStyle = wl.color;
-          ctx.fill();
-
-          // Subtle golden crest highlight near the moonlight path
-          ctx.strokeStyle = 'rgba(246, 200, 110, 0.09)';
-          ctx.lineWidth = 1;
-          ctx.stroke();
-        });
-
-        // 6. Luminous Sea-Foam Wake & Bow Spray around the Ship's Hull
-        const wakeY = horizonY + seaHeight * 0.18;
-        ctx.save();
-        for (let w = 0; w < 14; w++) {
-          const progress = ((time * 0.45 + w / 14) % 1);
-          const foamX = shipX - 65 * shipScale + progress * 220 * shipScale;
-          const foamY = wakeY + Math.sin(time * 3.2 + w) * 2.5 + progress * 12;
-          const foamW = (18 + progress * 48) * shipScale;
-          const foamAlpha = (1 - progress) * 0.42;
-
-          const fGrad = ctx.createLinearGradient(foamX - foamW, foamY, foamX + foamW, foamY);
-          fGrad.addColorStop(0, 'rgba(255, 244, 210, 0)');
-          fGrad.addColorStop(0.5, `rgba(255, 241, 205, ${foamAlpha})`);
-          fGrad.addColorStop(1, 'rgba(255, 244, 210, 0)');
-          ctx.fillStyle = fGrad;
-          ctx.fillRect(foamX - foamW, foamY, foamW * 2, 2.2);
-        }
-        ctx.restore();
-      }
-
-      // Main 60FPS Animation Loop
-      let startTime = performance.now();
-      function render(now) {
+      const startTime = performance.now();
+      function animateScene(now) {
         const time = (now - startTime) * 0.001;
 
-        // Smooth pointer interpolation
-        pointer.x += (pointer.targetX - pointer.x) * 0.05;
-        pointer.y += (pointer.targetY - pointer.y) * 0.05;
+        pointer.x += (pointer.targetX - pointer.x) * 0.045;
+        pointer.y += (pointer.targetY - pointer.y) * 0.045;
 
-        // Responsive positioning: keep Moon & Ship prominently visible on both desktop & mobile
         const isMobile = width < 768;
-        const horizonY = height * (isMobile ? 0.72 : 0.75);
+        const horizonY = height * (isMobile ? 0.73 : 0.76);
 
-        // Centerpiece coordinates (slightly right on desktop so left hero headline shines)
-        const baseCenterX = width * (isMobile ? 0.52 : 0.63);
-        const moonX = baseCenterX - pointer.x * 16;
-        const moonY = height * (isMobile ? 0.36 : 0.39) - pointer.y * 12;
-        const moonRadius = Math.min(width * (isMobile ? 0.34 : 0.23), height * 0.31);
+        // Centerpiece framing matching the reference artwork composition
+        const centerpieceX = width * (isMobile ? 0.52 : 0.64);
+        const moonX = centerpieceX + 8 - pointer.x * 14;
+        const moonY = height * (isMobile ? 0.35 : 0.38) - pointer.y * 10;
+        const moonRadius = Math.min(width * (isMobile ? 0.35 : 0.245), height * 0.325);
 
-        // 1. Deep Midnight Sky Gradient
+        // 1. Deep Atmospheric Midnight Sky
         const skyGrad = ctx.createLinearGradient(0, 0, 0, horizonY);
-        skyGrad.addColorStop(0, '#04070F');
-        skyGrad.addColorStop(0.45, '#091122');
-        skyGrad.addColorStop(0.85, '#131D33');
-        skyGrad.addColorStop(1, '#1E2536');
+        skyGrad.addColorStop(0, '#03060D');
+        skyGrad.addColorStop(0.42, '#080F1E');
+        skyGrad.addColorStop(0.82, '#121B2E');
+        skyGrad.addColorStop(1, '#1C2232');
         ctx.fillStyle = skyGrad;
         ctx.fillRect(0, 0, width, horizonY + 4);
 
-        // 2. Twinkling Stars
+        // 2. Subtle Twinkling Stars
         stars.forEach(s => {
-          const sx = ((s.x * width - pointer.x * 6) + width) % width;
-          const sy = s.y * horizonY - pointer.y * 4;
-          const twinkle = 0.35 + 0.65 * Math.abs(Math.sin(time * s.speed + s.phase));
-          ctx.fillStyle = `rgba(255, 244, 214, ${twinkle * 0.75})`;
+          const sx = ((s.x * width - pointer.x * 5) + width) % width;
+          const sy = s.y * horizonY - pointer.y * 3;
+          const twinkle = 0.3 + 0.7 * Math.abs(Math.sin(time * s.speed + s.phase));
+          ctx.fillStyle = `rgba(255, 244, 214, ${twinkle * 0.7})`;
           ctx.beginPath();
           ctx.arc(sx, sy, s.size, 0, Math.PI * 2);
           ctx.fill();
         });
 
-        // 3. Massive Radial Golden Atmospheric Halo around the Moon
-        const outerHalo = ctx.createRadialGradient(
-          moonX, moonY, moonRadius * 0.85,
-          moonX, moonY, moonRadius * 2.8
+        // 3. Broad Golden Corona & Atmospheric Scattering Halo around the Moon
+        const corona = ctx.createRadialGradient(
+          moonX, moonY, moonRadius * 0.88,
+          moonX, moonY, moonRadius * 2.9
         );
-        outerHalo.addColorStop(0, 'rgba(255, 232, 168, 0.55)');
-        outerHalo.addColorStop(0.28, 'rgba(229, 169, 60, 0.24)');
-        outerHalo.addColorStop(0.62, 'rgba(184, 115, 30, 0.08)');
-        outerHalo.addColorStop(1, 'rgba(9, 17, 34, 0)');
-        ctx.fillStyle = outerHalo;
+        corona.addColorStop(0, 'rgba(255, 234, 172, 0.58)');
+        corona.addColorStop(0.24, 'rgba(229, 169, 60, 0.26)');
+        corona.addColorStop(0.58, 'rgba(184, 115, 30, 0.08)');
+        corona.addColorStop(1, 'rgba(8, 15, 30, 0)');
+        ctx.fillStyle = corona;
         ctx.beginPath();
-        ctx.arc(moonX, moonY, moonRadius * 2.8, 0, Math.PI * 2);
+        ctx.arc(moonX, moonY, moonRadius * 2.9, 0, Math.PI * 2);
         ctx.fill();
 
-        // 4. Back Layer Cumulus Clouds
-        clouds.filter(c => c.layer === 'back').forEach(c => {
-          c.x = (c.x + c.speed * 0.016 + 1) % 1;
-          const cx = c.x * width - pointer.x * 24;
-          const cy = c.y * height - pointer.y * 14;
-          drawCloudPuff(cx, cy, c.r * Math.min(width, height * 1.3), c.warm, moonX, moonY);
-        });
+        // 4. Upper & Background Volumetric Clouds
+        const cloudDriftL = Math.sin(time * 0.18) * 18;
+        const cloudDriftR = Math.cos(time * 0.16) * 18;
+        const cloudScale = Math.max(0.65, moonRadius / 210);
 
-        // 5. Render Detailed Golden Full Moon
         ctx.save();
-        ctx.shadowColor = 'rgba(255, 224, 145, 0.75)';
-        ctx.shadowBlur = 45;
+        ctx.globalAlpha = 0.78;
+        ctx.drawImage(
+          cloudSprites.upperWispL,
+          moonX - moonRadius * 2.35 + cloudDriftL - pointer.x * 18,
+          moonY - moonRadius * 1.35 - pointer.y * 10,
+          440 * cloudScale,
+          220 * cloudScale
+        );
+        ctx.drawImage(
+          cloudSprites.upperWispR,
+          moonX + moonRadius * 0.55 - cloudDriftR - pointer.x * 18,
+          moonY - moonRadius * 1.42 - pointer.y * 10,
+          460 * cloudScale,
+          240 * cloudScale
+        );
+        ctx.restore();
+
+        // 5. Render Photorealistic High-Res Cratered Golden Full Moon
+        ctx.save();
+        ctx.shadowColor = 'rgba(255, 224, 145, 0.72)';
+        ctx.shadowBlur = 48;
         ctx.drawImage(
           moonCanvas,
           moonX - moonRadius,
@@ -1203,44 +1409,55 @@
         );
         ctx.restore();
 
-        // 6. Front Layer Lit Clouds Framing the Lower Edges of the Moon
-        clouds.filter(c => c.layer === 'front').forEach(c => {
-          c.x = (c.x + c.speed * 0.016 + 1) % 1;
-          const cx = c.x * width - pointer.x * 36;
-          const cy = c.y * height - pointer.y * 20;
-          drawCloudPuff(cx, cy, c.r * Math.min(width, height * 1.3), c.warm, moonX, moonY);
-        });
+        // 6. Dramatic Lit Cumulus Cloud Banks Framing Lower-Left & Lower-Right of the Moon
+        ctx.save();
+        // Left illuminated cloud bank
+        ctx.drawImage(
+          cloudSprites.leftTower,
+          moonX - moonRadius * 2.25 + cloudDriftL * 1.2 - pointer.x * 28,
+          moonY - moonRadius * 0.15 - pointer.y * 16,
+          520 * cloudScale,
+          420 * cloudScale
+        );
+        ctx.drawImage(
+          cloudSprites.leftLow,
+          moonX - moonRadius * 2.65 - cloudDriftL * 0.8 - pointer.x * 34,
+          moonY + moonRadius * 0.25 - pointer.y * 18,
+          480 * cloudScale,
+          320 * cloudScale
+        );
 
-        // 7. Ocean Surface, Golden Reflections & Waves
-        const shipScale = Math.max(0.72, Math.min(1.28, moonRadius / 185));
-        const shipX = baseCenterX - 10 * shipScale + pointer.x * 28 + Math.sin(time * 0.45) * 14;
-        const shipWaterlineY = horizonY + (height - horizonY) * 0.18 + pointer.y * 10;
+        // Right illuminated cloud bank
+        ctx.drawImage(
+          cloudSprites.rightTower,
+          moonX + moonRadius * 0.22 - cloudDriftR * 1.2 - pointer.x * 28,
+          moonY - moonRadius * 0.22 - pointer.y * 16,
+          540 * cloudScale,
+          440 * cloudScale
+        );
+        ctx.drawImage(
+          cloudSprites.rightLow,
+          moonX + moonRadius * 0.55 + cloudDriftR * 0.8 - pointer.x * 34,
+          moonY + moonRadius * 0.22 - pointer.y * 18,
+          500 * cloudScale,
+          340 * cloudScale
+        );
+        ctx.restore();
 
-        drawOcean(horizonY, moonX, shipX, shipScale, time);
+        // 7. Ocean Surface, Golden Reflections & Bow Wake
+        const shipScale = Math.max(0.74, Math.min(1.32, moonRadius / 192));
+        const shipX = centerpieceX - 12 * shipScale + pointer.x * 26 + Math.sin(time * 0.42) * 12;
+        const shipWaterlineY = horizonY + (height - horizonY) * 0.21 + pointer.y * 9;
 
-        // 8. Majestic Sailing Galleon Silhouetted Against the Moon
-        drawSailingShip(shipX, shipWaterlineY, shipScale, time);
+        drawPhotorealisticOcean(horizonY, moonX, shipX, shipScale, time);
 
-        // 9. Drifting Low Sea Mist across the Waterline
-        mistParticles.forEach(m => {
-          m.x = (m.x + m.speed * 0.016 + 1) % 1;
-          const mx = m.x * width + pointer.x * 42;
-          const my = m.y * height;
-          const mw = m.w * width;
-          const mh = m.h * height;
-          const mGrad = ctx.createRadialGradient(mx, my, 4, mx, my, mw * 0.5);
-          mGrad.addColorStop(0, `rgba(235, 210, 165, ${m.alpha})`);
-          mGrad.addColorStop(1, 'rgba(235, 210, 165, 0)');
-          ctx.fillStyle = mGrad;
-          ctx.beginPath();
-          ctx.ellipse(mx, my, mw * 0.5, mh, 0, 0, Math.PI * 2);
-          ctx.fill();
-        });
+        // 8. Photorealistic 3-Masted Tall Sailing Galleon Silhouetted Against the Moon
+        drawPhotorealisticGalleon(shipX, shipWaterlineY, shipScale, time);
 
-        requestAnimationFrame(render);
+        requestAnimationFrame(animateScene);
       }
 
-      requestAnimationFrame(render);
+      requestAnimationFrame(animateScene);
     })();
 
     /**
